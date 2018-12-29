@@ -1,5 +1,9 @@
-package org.hexworks.amethyst.api
+package org.hexworks.amethyst.api.entity
 
+import org.hexworks.amethyst.api.Attribute
+import org.hexworks.amethyst.api.Command
+import org.hexworks.amethyst.api.Context
+import org.hexworks.amethyst.api.system.System
 import org.hexworks.cobalt.datatypes.Identifier
 import org.hexworks.cobalt.datatypes.Maybe
 import kotlin.reflect.KClass
@@ -26,8 +30,6 @@ interface Entity<out T : EntityType, U : Context> {
     fun fetchAttributes(): Set<Attribute>
 
     fun <T : Attribute> attribute(klass: KClass<T>): Maybe<T>
-
-    fun <U : Context, T : System<U>> system(klass: KClass<T>): Maybe<T>
 
     /**
      * Adds the given [Command] to this [Entity] for processing.

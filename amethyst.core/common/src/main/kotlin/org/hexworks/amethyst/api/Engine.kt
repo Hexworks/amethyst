@@ -1,5 +1,8 @@
 package org.hexworks.amethyst.api
 
+import org.hexworks.amethyst.api.entity.Entity
+import org.hexworks.amethyst.api.entity.EntityType
+
 interface Engine<T : Context> {
 
     /**

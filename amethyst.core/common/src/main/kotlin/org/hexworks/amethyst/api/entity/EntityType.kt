@@ -1,4 +1,6 @@
-package org.hexworks.amethyst.api
+package org.hexworks.amethyst.api.entity
+
+import org.hexworks.amethyst.api.Attribute
 
 interface EntityType : Attribute {
 
