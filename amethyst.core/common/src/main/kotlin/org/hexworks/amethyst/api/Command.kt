@@ -1,5 +1,7 @@
 package org.hexworks.amethyst.api
 
+import org.hexworks.amethyst.api.entity.Entity
+import org.hexworks.amethyst.api.entity.EntityType
 import kotlin.reflect.KClass
 
 interface Command<T : EntityType, C : Context> {
@@ -24,7 +26,7 @@ interface Command<T : EntityType, C : Context> {
 
     @Suppress("UNCHECKED_CAST")
     fun <T : Command<out EntityType, C>> whenCommandIs(klass: KClass<T>,
-                                                       fn: (T) -> Unit): Boolean {
+                                                                                                                  fn: (T) -> Unit): Boolean {
         return if (klass.isInstance(this)) {
             fn(this as T)
             true

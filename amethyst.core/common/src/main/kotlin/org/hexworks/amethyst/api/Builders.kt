@@ -1,6 +1,8 @@
 package org.hexworks.amethyst.api
 
 import org.hexworks.amethyst.api.builder.EntityBuilder
+import org.hexworks.amethyst.api.entity.Entity
+import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.amethyst.internal.DefaultEngine
 
 /**
