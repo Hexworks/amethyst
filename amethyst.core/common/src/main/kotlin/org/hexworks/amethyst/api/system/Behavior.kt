@@ -4,7 +4,6 @@ import org.hexworks.amethyst.api.Context
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.amethyst.internal.system.CompositeAndBehavior
-import org.hexworks.amethyst.internal.system.CompositeLinkBehavior
 import org.hexworks.amethyst.internal.system.CompositeOrBehavior
 
 /**
@@ -38,15 +37,5 @@ interface Behavior<C : Context> : System<C> {
      */
     infix fun and(other: Behavior<C>): Behavior<C> {
         return CompositeAndBehavior(this, other)
-    }
-
-    /**
-     * Links this and the [other] [Behavior]:
-     * When [update] is called it is run on this one first, and then on [other].
-     * @return their results `or`-ed together (if any of them is a success, their
-     * combined result is also a success).
-     */
-    infix fun link(other: Behavior<C>): Behavior<C> {
-        return CompositeLinkBehavior(this, other)
     }
 }

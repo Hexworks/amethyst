@@ -1,8 +1,6 @@
 package org.hexworks.amethyst.api.base
 
-import org.hexworks.amethyst.api.Attribute
-import org.hexworks.amethyst.api.Command
-import org.hexworks.amethyst.api.Context
+import org.hexworks.amethyst.api.*
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.amethyst.api.system.Behavior
@@ -32,8 +30,8 @@ abstract class BaseEntity<T : EntityType, C : Context>(
         return false
     }
 
-    override fun executeCommand(command: Command<out EntityType, C>): Boolean {
-        return false
+    override fun executeCommand(command: Command<out EntityType, C>): Response {
+        return Pass
     }
 
     override fun update(context: C): Boolean {
