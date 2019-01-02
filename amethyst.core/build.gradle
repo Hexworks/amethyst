@@ -25,6 +25,7 @@ kotlin {
             resources.srcDirs = ["common/src/main/resources"]
             dependencies {
                 implementation "org.jetbrains.kotlin:kotlin-stdlib"
+                implementation "org.jetbrains.kotlin:kotlin-reflect"
 
                 api "org.hexworks.cobalt:cobalt.events:$cobalt_version"
                 api "org.hexworks.cobalt:cobalt.datatypes:$cobalt_version"

@@ -3,6 +3,7 @@ package org.hexworks.amethyst.api.entity
 import org.hexworks.amethyst.api.Attribute
 import org.hexworks.amethyst.api.Command
 import org.hexworks.amethyst.api.Context
+import org.hexworks.amethyst.api.Response
 import org.hexworks.amethyst.api.system.System
 import org.hexworks.cobalt.datatypes.Identifier
 import org.hexworks.cobalt.datatypes.Maybe
@@ -15,7 +16,7 @@ import kotlin.reflect.KClass
  * `CombatHandler`, `ArmorUser`, `HunterSeeker` components
  * with a `Creature` property.
  */
-interface Entity<out T : EntityType, U : Context> {
+interface Entity<out T : EntityType, C : Context> {
 
     val id: Identifier
 
@@ -36,18 +37,19 @@ interface Entity<out T : EntityType, U : Context> {
      * It will be processed when the [Entity] is updated next.
      * @return true if the [Command] can be processed by a [System] false if not.
      */
-    fun sendCommand(command: Command<out EntityType, U>): Boolean
+    fun sendCommand(command: Command<out EntityType, C>): Boolean
 
     /**
      * Makes this [Entity] immediately process this [Command].
-     * @return true if the [Command] was processed by a [System] false if not.
+     * @return the [Response] for the given [command]
+     * @see [Response] for more info.
      */
-    fun executeCommand(command: Command<out EntityType, U>): Boolean
+    fun executeCommand(command: Command<out EntityType, C>): Response
 
     /**
      * Updates this [Entity] using the given [context].
      * @return true if the [Entity] was updated, false if not.
      */
-    fun update(context: U): Boolean
+    fun update(context: C): Boolean
 
 }

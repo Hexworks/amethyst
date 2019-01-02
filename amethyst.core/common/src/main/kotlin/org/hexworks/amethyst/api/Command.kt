@@ -13,10 +13,10 @@ interface Command<T : EntityType, C : Context> {
     val source: Entity<T, C>
 
     @Suppress("UNCHECKED_CAST")
-    fun <T : Command<out EntityType, C>, U : Any> whenCommandIs(
+    fun <T : Command<out EntityType, C>> whenCommandIs(
             klass: KClass<T>,
-            fn: (T) -> U,
-            otherwise: () -> U): U {
+            fn: (T) -> Response,
+            otherwise: () -> Response): Response {
         return if (klass.isInstance(this)) {
             fn(this as T)
         } else {
@@ -26,10 +26,31 @@ interface Command<T : EntityType, C : Context> {
 
     @Suppress("UNCHECKED_CAST")
     fun <T : Command<out EntityType, C>> whenCommandIs(klass: KClass<T>,
-                                                                                                                  fn: (T) -> Unit): Boolean {
+                                                       fn: (T) -> Response): Response {
         return if (klass.isInstance(this)) {
             fn(this as T)
-            true
+        } else {
+            Pass
+        }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T : Command<out EntityType, C>> whenCommandIs(
+            klass: KClass<T>,
+            fn: (T) -> Boolean,
+            otherwise: () -> Boolean): Boolean {
+        return if (klass.isInstance(this)) {
+            fn(this as T)
+        } else {
+            otherwise()
+        }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T : Command<out EntityType, C>> whenCommandIs(klass: KClass<T>,
+                                                       fn: (T) -> Boolean): Boolean {
+        return if (klass.isInstance(this)) {
+            fn(this as T)
         } else {
             false
         }

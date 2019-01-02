@@ -1,8 +1,6 @@
 package org.hexworks.amethyst.internal.entity
 
-import org.hexworks.amethyst.api.Attribute
-import org.hexworks.amethyst.api.Command
-import org.hexworks.amethyst.api.Context
+import org.hexworks.amethyst.api.*
 import org.hexworks.amethyst.api.base.BaseEntity
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.amethyst.api.system.Behavior
@@ -28,11 +26,23 @@ class DefaultEntity<T : EntityType, C : Context>(type: T,
         return false
     }
 
-    override fun executeCommand(command: Command<out EntityType, C>): Boolean {
+    @Suppress("UNCHECKED_CAST")
+    override fun executeCommand(command: Command<out EntityType, C>): Response {
         logger.debug("Executing entity command '$command' on entity $this.")
-        return facets.map {
-            it.executeCommand(command)
-        }.fold(false, Boolean::or)
+        return if (facets.isNotEmpty()) {
+            val iter = facets.iterator()
+            var response: Response = Pass
+            var lastCommand = command
+            while (iter.hasNext() && response != Consumed) {
+                response = iter.next().executeCommand(lastCommand)
+                if (response is CommandResponse<*>) {
+                    lastCommand = response.command as Command<out EntityType, C>
+                }
+            }
+            response
+        } else {
+            Pass
+        }
     }
 
     override fun update(context: C): Boolean {
