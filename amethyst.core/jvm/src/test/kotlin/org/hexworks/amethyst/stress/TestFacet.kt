@@ -5,13 +5,12 @@ import org.hexworks.amethyst.api.Pass
 import org.hexworks.amethyst.api.Response
 import org.hexworks.amethyst.api.base.BaseFacet
 import org.hexworks.amethyst.api.entity.EntityType
-import org.hexworks.amethyst.api.extensions.whenCommandIs
+import org.hexworks.amethyst.api.extensions.responseWhenCommandIs
 
 object TestFacet : BaseFacet<TestContext>() {
-    override fun executeCommand(command: Command<out EntityType, TestContext>): Response<TestContext> {
-        command.whenCommandIs<TestContext, TestCommand> {
-
+    override fun executeCommand(command: Command<out EntityType, TestContext>): Response {
+        return command.responseWhenCommandIs<TestContext, TestCommand> {
+            Pass
         }
-        return Pass(command)
     }
 }

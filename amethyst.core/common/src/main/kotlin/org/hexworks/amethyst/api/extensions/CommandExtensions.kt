@@ -5,15 +5,15 @@ import org.hexworks.amethyst.api.Context
 import org.hexworks.amethyst.api.Response
 import org.hexworks.amethyst.api.entity.EntityType
 
-inline fun <C : Context, reified T : Command<out EntityType, C>> Command<out EntityType, C>.whenCommandIs(
+inline fun <C : Context, reified T : Command<out EntityType, C>> Command<out EntityType, C>.responseWhenCommandIs(
         noinline fn: (T) -> Response): Response {
-    return whenCommandIs(T::class, fn)
+    return responseWhenCommandIs(T::class, fn)
 }
 
-inline fun <C : Context, reified T : Command<out EntityType, C>> Command<out EntityType, C>.whenCommandIs(
+inline fun <C : Context, reified T : Command<out EntityType, C>> Command<out EntityType, C>.responseWhenCommandIs(
         noinline fn: (T) -> Response,
         noinline otherwise: () -> Response): Response {
-    return whenCommandIs(T::class, fn, otherwise)
+    return responseWhenCommandIs(T::class, fn, otherwise)
 }
 
 inline fun <C : Context, reified T : Command<out EntityType, C>> Command<out EntityType, C>.whenCommandIs(
