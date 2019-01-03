@@ -13,7 +13,7 @@ interface Command<T : EntityType, C : Context> {
     val source: Entity<T, C>
 
     @Suppress("UNCHECKED_CAST")
-    fun <T : Command<out EntityType, C>> whenCommandIs(
+    fun <T : Command<out EntityType, C>> responseWhenCommandIs(
             klass: KClass<T>,
             fn: (T) -> Response,
             otherwise: () -> Response): Response {
@@ -25,8 +25,8 @@ interface Command<T : EntityType, C : Context> {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <T : Command<out EntityType, C>> whenCommandIs(klass: KClass<T>,
-                                                       fn: (T) -> Response): Response {
+    fun <T : Command<out EntityType, C>> responseWhenCommandIs(klass: KClass<T>,
+                                                               fn: (T) -> Response): Response {
         return if (klass.isInstance(this)) {
             fn(this as T)
         } else {
