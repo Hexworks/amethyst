@@ -8,7 +8,7 @@ import org.hexworks.amethyst.internal.system.CompositeOrBehavior
 
 /**
  * A [Behavior] is a [System] which performs actions autonomously
- * with entities whenever they are [update]d.
+ * on entities whenever they are [update]d.
  */
 interface Behavior<C : Context> : System<C> {
 

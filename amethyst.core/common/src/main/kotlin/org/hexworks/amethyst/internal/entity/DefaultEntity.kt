@@ -29,7 +29,7 @@ class DefaultEntity<T : EntityType, C : Context>(type: T,
     @Suppress("UNCHECKED_CAST")
     override fun executeCommand(command: Command<out EntityType, C>): Response {
         logger.debug("Executing entity command '$command' on entity $this.")
-        return if (facets.isNotEmpty()) {
+        return if (hasFacets) {
             val iter = facets.iterator()
             var response: Response = Pass
             var lastCommand = command

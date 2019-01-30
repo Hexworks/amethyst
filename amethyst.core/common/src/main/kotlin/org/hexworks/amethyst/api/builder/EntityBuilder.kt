@@ -8,25 +8,28 @@ import org.hexworks.amethyst.api.system.Behavior
 import org.hexworks.amethyst.api.system.Facet
 import org.hexworks.amethyst.internal.entity.DefaultEntity
 
-class EntityBuilder<T : EntityType, U : Context>(private val type: T) {
+/**
+ * A builder for creating [Entity] objects.
+ */
+class EntityBuilder<T : EntityType, C : Context>(private val type: T) {
 
     private var attributes = setOf<Attribute>()
-    private var facets = setOf<Facet<U>>()
-    private var behaviors = setOf<Behavior<U>>()
+    private var facets = setOf<Facet<C>>()
+    private var behaviors = setOf<Behavior<C>>()
 
     fun attributes(vararg attributes: Attribute) = also {
         this.attributes = attributes.toSet()
     }
 
-    fun facets(vararg facets: Facet<U>) = also {
+    fun facets(vararg facets: Facet<C>) = also {
         this.facets = facets.toSet()
     }
 
-    fun behaviors(vararg behaviors: Behavior<U>) = also {
+    fun behaviors(vararg behaviors: Behavior<C>) = also {
         this.behaviors = behaviors.toSet()
     }
 
-    fun build(): Entity<T, U> = DefaultEntity(
+    fun build(): Entity<T, C> = DefaultEntity(
             type = type,
             attributes = attributes.toSet(),
             facets = facets.toSet(),
