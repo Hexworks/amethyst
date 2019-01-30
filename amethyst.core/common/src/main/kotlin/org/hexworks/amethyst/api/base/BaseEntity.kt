@@ -1,30 +1,25 @@
 package org.hexworks.amethyst.api.base
 
 import org.hexworks.amethyst.api.*
+import org.hexworks.amethyst.api.accessor.AttributeAccessor
+import org.hexworks.amethyst.api.accessor.BehaviorAccessor
+import org.hexworks.amethyst.api.accessor.FacetAccessor
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.amethyst.api.system.Behavior
 import org.hexworks.amethyst.api.system.Facet
-import org.hexworks.cobalt.datatypes.Maybe
 import org.hexworks.cobalt.datatypes.factory.IdentifierFactory
-import kotlin.reflect.KClass
 
 abstract class BaseEntity<T : EntityType, C : Context>(
         override val type: T,
-        val attributes: Set<Attribute> = setOf(),
-        val facets: Set<Facet<C>> = setOf(),
-        val behaviors: Set<Behavior<C>> = setOf()) : Entity<T, C> {
+        attributes: Set<Attribute> = setOf(),
+        facets: Set<Facet<C>> = setOf(),
+        behaviors: Set<Behavior<C>> = setOf()) : Entity<T, C>,
+        AttributeAccessor by AttributeAccessor.create(attributes),
+        FacetAccessor<C> by FacetAccessor.create(facets),
+        BehaviorAccessor<C> by BehaviorAccessor.create(behaviors) {
 
     override val id = IdentifierFactory.randomIdentifier()
-
-    override fun fetchAttributes(): Set<Attribute> {
-        return attributes.toSet()
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : Attribute> attribute(klass: KClass<T>): Maybe<T> {
-        return Maybe.ofNullable(attributes.firstOrNull { klass.isInstance(it) } as? T)
-    }
 
     override fun sendCommand(command: Command<out EntityType, C>): Boolean {
         return false

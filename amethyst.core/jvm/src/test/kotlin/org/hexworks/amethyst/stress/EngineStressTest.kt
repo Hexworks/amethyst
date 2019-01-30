@@ -19,7 +19,7 @@ class EngineStressTest {
 
     @Test
     fun given_a_lot_of_entities_update_should_run_fast() {
-        repeat(100) { idx ->
+        repeat(100000) { idx ->
             target.addEntity(Entities.newEntityOfType(TestEntityType) {
                 attributes(TestAttribute(
                         name = "name $idx",
