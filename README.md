@@ -1,3 +1,6 @@
+
+![Logo](https://github.com/Hexworks/amethyst/blob/master/amethyst_logo_PREVIEW_shine_darkbg.png)
+
 # Introducing Amethyst
 
 So what is Amethyst, and why is it useful for us? Amethyst is a small library which takes
