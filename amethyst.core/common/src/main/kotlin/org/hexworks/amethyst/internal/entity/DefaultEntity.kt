@@ -52,7 +52,6 @@ class DefaultEntity<T : EntityType, C : Context>(type: T,
         events.forEach {
             executeCommand(it)
         }
-        logger.debug("Updating entity '$this'.")
         return behaviors.fold(false) { result, behavior ->
             result or behavior.update(this, context)
         }
