@@ -2,6 +2,7 @@ package org.hexworks.amethyst.internal.entity
 
 import org.hexworks.amethyst.api.*
 import org.hexworks.amethyst.api.base.BaseEntity
+import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.amethyst.api.system.Behavior
 import org.hexworks.amethyst.api.system.Facet
@@ -18,7 +19,7 @@ class DefaultEntity<T : EntityType, C : Context>(type: T,
         behaviors = behaviors) {
 
     private val eventStack = mutableListOf<Command<out EntityType, C>>()
-    private val logger = LoggerFactory.getLogger(this::class)
+    private val logger = LoggerFactory.getLogger(Entity::class)
 
     override fun sendCommand(command: Command<out EntityType, C>): Boolean {
         logger.debug("Receiving command '$command' on entity '$this'.")
