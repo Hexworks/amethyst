@@ -32,4 +32,10 @@ abstract class BaseEntity<T : EntityType, C : Context>(
     override fun update(context: C): Boolean {
         return false
     }
+
+    override fun toString(): String {
+        return "BaseEntity(id=$id, type=$type, name=$name, description=$description)"
+    }
+
+
 }

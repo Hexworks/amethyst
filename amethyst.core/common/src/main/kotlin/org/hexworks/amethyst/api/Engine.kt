@@ -2,6 +2,7 @@ package org.hexworks.amethyst.api
 
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
+import org.hexworks.amethyst.internal.DefaultEngine
 
 interface Engine<T : Context> {
 
@@ -19,4 +20,9 @@ interface Engine<T : Context> {
      * Updates the [Entity] objects in this [Engine] with the given [context].
      */
     fun update(context: T)
+
+    companion object {
+
+        fun <T : Context> default() = DefaultEngine<T>()
+    }
 }
