@@ -8,7 +8,7 @@ care of managing your game entities in a nutshell. It is similar to an [Entity C
 but it is a bit different in some important aspects.
 
 "So what is a game entity anyway?", you might ask. A game entity can be anything which has its own behavior or state
-in your game, form a goblin, to a wall, or even immaterial effects, like shadows. What's important about a game entity
+in your game, from a goblin, to a wall, or even immaterial effects, like shadows. What's important about a game entity
 is that it encapsulates all internal state of our goblin for example and it also contains all actions it can
 perform. This means that by using this concept we can maintain the [Cohesion](https://en.wikipedia.org/wiki/Cohesion_(computer_science))
 of our game objects while still retaining the flexibility.
