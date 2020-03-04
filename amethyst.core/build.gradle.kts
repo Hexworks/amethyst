@@ -11,15 +11,11 @@ kotlin {
         withJava()
     }
 
-//    js {
-//        browser {
-//            testTask {
-//                useKarma {
-//                    useChrome()
-//                }
-//            }
-//        }
-//    }
+    js {
+        browser {
+            testTask { enabled = false }
+        }
+    }
 
     dependencies {
 
@@ -37,8 +33,8 @@ kotlin {
             jvmMainApi(slf4jApi)
             jvmMainApi(logbackClassic)
 
-//            jsMainApi(kotlinStdLibJs)
-//            jsMainApi(kotlinxCoroutinesJs)
+            jsMainApi(kotlinStdLibJs)
+            jsMainApi(kotlinxCoroutinesJs)
         }
 
         with(TestLibs) {
@@ -48,7 +44,7 @@ kotlin {
 
             jvmTestApi(kotlinTestJunit)
 
-//            jsTestApi(kotlinTestJs)
+            jsTestApi(kotlinTestJs)
         }
     }
 }
