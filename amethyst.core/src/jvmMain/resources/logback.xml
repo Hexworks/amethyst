@@ -1,0 +1,16 @@
+<configuration>
+
+    <!-- We only print to the console (stdout) by default using the following format -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <logger name="org.hexworks.amethyst" level="warn"/>
+
+</configuration>
