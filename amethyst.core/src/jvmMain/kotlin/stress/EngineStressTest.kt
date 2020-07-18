@@ -63,8 +63,7 @@ object EngineStressTest {
         return newEntityOfType(TestEntityType) {
             attributes(TestAttribute(
                     name = "name $idx",
-                    age = idx,
-                    id = UUID.randomUUID()))
+                    age = idx))
             facets(TestFacet)
         }
     }
@@ -73,8 +72,7 @@ object EngineStressTest {
         return newEntityOfType(TestEntityType) {
             attributes(TestAttribute(
                     name = "name $idx",
-                    age = idx,
-                    id = UUID.randomUUID()))
+                    age = idx))
             facets(TestFacet)
             behaviors(WaitingBehavior(waitMs))
         }

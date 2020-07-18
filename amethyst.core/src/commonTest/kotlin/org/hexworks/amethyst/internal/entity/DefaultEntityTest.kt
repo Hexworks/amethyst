@@ -1,17 +1,12 @@
 package org.hexworks.amethyst.internal.entity
 
-import org.hexworks.amethyst.api.Attribute
-import org.hexworks.amethyst.api.Command
-import org.hexworks.amethyst.api.Consumed
-import org.hexworks.amethyst.api.Context
-import org.hexworks.amethyst.api.Pass
-import org.hexworks.amethyst.api.Response
+import org.hexworks.amethyst.api.*
+import org.hexworks.amethyst.api.base.BaseAttribute
 import org.hexworks.amethyst.api.base.BaseBehavior
 import org.hexworks.amethyst.api.base.BaseEntityType
 import org.hexworks.amethyst.api.base.BaseFacet
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
-import org.hexworks.amethyst.api.newEntityOfType
 import org.hexworks.cobalt.core.platform.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -182,11 +177,25 @@ class DefaultEntityTest {
         }
     }
 
+    @Test
+    fun given_an_entity_with_two_identical_attributes_added_it_should_have_only_one_more() {
+        val initialAttributesNumber = target.attributes.toList().size
+
+        val dataAttribute = DataAttribute(1)
+
+        target.asMutableEntity().addAttribute(dataAttribute)
+        target.asMutableEntity().addAttribute(dataAttribute)
+
+        assertEquals( initialAttributesNumber + 1, target.attributes.toList().size);
+    }
+
     class TestCommand(override val source: Entity<TestType, TestContext>,
                       override val context: TestContext = TestContext) : Command<TestType, TestContext>
 
-    object InitialAttribute : Attribute
-    object AddedAttribute : Attribute
+    object InitialAttribute : BaseAttribute()
+    object AddedAttribute : BaseAttribute()
+
+    data class DataAttribute(val data: Int) : BaseAttribute()
 
     object InitialBehavior : TestBehavior(false)
     object AddedBehavior : TestBehavior(false)

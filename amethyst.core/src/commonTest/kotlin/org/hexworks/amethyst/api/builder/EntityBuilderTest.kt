@@ -1,12 +1,14 @@
 package org.hexworks.amethyst.api.builder
 
 import org.hexworks.amethyst.api.*
+import org.hexworks.amethyst.api.base.BaseAttribute
 import org.hexworks.amethyst.api.base.BaseBehavior
 import org.hexworks.amethyst.api.base.BaseEntityType
 import org.hexworks.amethyst.api.base.BaseFacet
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
@@ -62,7 +64,7 @@ class EntityBuilderTest {
         }
     }
 
-    object MandatoryAttribute : Attribute
+    object MandatoryAttribute : BaseAttribute()
 
     object BehaviorWithMandatoryAttribute : BaseBehavior<TestContext>(MandatoryAttribute::class) {
         override suspend fun update(entity: Entity<EntityType, TestContext>, context: TestContext): Boolean {
