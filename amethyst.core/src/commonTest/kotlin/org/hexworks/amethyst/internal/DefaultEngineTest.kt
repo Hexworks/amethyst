@@ -3,6 +3,7 @@ package org.hexworks.amethyst.internal
 import org.hexworks.amethyst.api.Context
 import org.hexworks.amethyst.api.Engine
 import org.hexworks.amethyst.api.base.BaseBehavior
+import org.hexworks.amethyst.api.base.BaseEntityType
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.amethyst.api.newEntityOfType
@@ -53,12 +54,12 @@ class DefaultEngineTest {
 
     object TestContext : Context
 
-    object Type0 : EntityType {
+    object Type0 : BaseEntityType() {
         override val name = "Type 0"
         override val description = "Type 0"
     }
 
-    object Type1 : EntityType {
+    object Type1 : BaseEntityType() {
         override val name = "Type 1"
         override val description = "Type 1"
     }

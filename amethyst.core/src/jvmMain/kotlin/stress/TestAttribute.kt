@@ -1,10 +1,8 @@
 package stress
 
-import org.hexworks.amethyst.api.Attribute
-import org.hexworks.cobalt.core.api.UUID
+import org.hexworks.amethyst.api.base.BaseAttribute
 
 data class TestAttribute(
         val name: String,
-        val age: Int,
-        val id: UUID
-) : Attribute
+        val age: Int
+) : BaseAttribute()
