@@ -17,7 +17,7 @@ class DefaultAttributeMutator(attributes: Set<Attribute>) : AttributeMutator {
         get() = currentAttributes.isNotEmpty()
 
     private var currentAttributes = attributes.map {
-        Pair(it.id, it)
+        it.id to it
     }.toMap().toPersistentHashMap()
 
     @Suppress("UNCHECKED_CAST")
