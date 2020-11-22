@@ -68,12 +68,12 @@ class EntityBuilderTest {
     object MandatoryAttribute : BaseAttribute()
 
     object BehaviorWithMandatoryAttribute : BaseBehavior<TestContext>(MandatoryAttribute::class) {
-        override suspend fun update(entity: Entity<EntityType, TestContext>, context: TestContext): Boolean {
+        override suspend fun update(entity: Entity<out EntityType, TestContext>, context: TestContext): Boolean {
             TODO("not implemented")
         }
     }
 
-    object FacetWithMandatoryAttribute : BaseFacet<TestType, TestContext, TestCommand>(MandatoryAttribute::class) {
+    object FacetWithMandatoryAttribute : BaseFacet<TestContext, TestCommand>(TestCommand::class, MandatoryAttribute::class) {
         override suspend fun executeCommand(command: TestCommand): Response {
             TODO("Not yet implemented")
         }
@@ -83,7 +83,7 @@ class EntityBuilderTest {
 
     object TestContext : Context
 
-    object TestCommand: Command<TestType, TestContext> {
+    object TestCommand : Command<TestContext> {
         override val context: TestContext
             get() = TODO("Not yet implemented")
         override val source: Entity<TestType, TestContext>

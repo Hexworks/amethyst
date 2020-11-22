@@ -83,7 +83,7 @@ object EngineStressTest {
         override val id: UUID = UUID.randomUUID()
         override val mandatoryAttributes: Set<KClass<out Attribute>> = setOf()
 
-        override suspend fun update(entity: Entity<EntityType, C>, context: C): Boolean {
+        override suspend fun update(entity: Entity<out EntityType, C>, context: C): Boolean {
             Thread.sleep(waitMs)
             return true
         }

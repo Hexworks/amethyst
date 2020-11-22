@@ -1,12 +1,8 @@
 package org.hexworks.amethyst.api.system
 
-import org.hexworks.amethyst.api.Command
-import org.hexworks.amethyst.api.Context
-import org.hexworks.amethyst.api.Response
-import org.hexworks.amethyst.api.Pass
-import org.hexworks.amethyst.api.Attribute
-import org.hexworks.amethyst.api.entity.EntityType
+import org.hexworks.amethyst.api.*
 import org.hexworks.amethyst.internal.system.CompositeFacet
+import kotlin.reflect.KClass
 
 /**
  * A [Facet] is a [System] that performs actions based on the [Command] they receive.
@@ -22,7 +18,12 @@ import org.hexworks.amethyst.internal.system.CompositeFacet
  *
  * @see Attribute
  */
-interface Facet<T : EntityType, C : Context, P : Command<T, C>> : System<C> {
+interface Facet<C : Context, P : Command<C>> : System<C> {
+
+    /**
+     * The type of the [Command] this [Facet] accepts
+     */
+    val commandType: KClass<P>
 
     /**
      * Performs the given [command].
@@ -31,18 +32,24 @@ interface Facet<T : EntityType, C : Context, P : Command<T, C>> : System<C> {
     suspend fun executeCommand(command: P): Response
 
     /**
-     * Alias for [plus]
-     * @see plus
+     * Tries to execute the given [command] by checking if it has
+     * an acceptable type ([commandType]).
+     * @return the result of executing the [Command] or [Pass] if it
+     * couldn't be accepted.
      */
-    suspend fun compose(other: Facet<T, C, P>): Facet<T, C, P> = plus(other)
+    suspend fun tryExecuteCommand(command: Command<C>): Response
 
     /**
      * Composes this [Facet] with [other] which means that when [executeCommand]
      * is called its result will be passed to [other]'s [executeCommand] when
      * the [Response] is [Pass]
      */
-    suspend operator fun plus(other: Facet<T, C, P>): Facet<T, C, P> = CompositeFacet(
-            children = setOf(this, other)
+    suspend fun compose(
+            other: Facet<C, P>,
+            commonAncestor: KClass<P>
+    ): Facet<C, P> = CompositeFacet(
+            children = setOf(this, other),
+            commandType = commonAncestor
     )
 
 }

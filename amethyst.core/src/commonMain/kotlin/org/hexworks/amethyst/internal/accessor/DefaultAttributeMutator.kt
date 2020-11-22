@@ -8,6 +8,7 @@ import org.hexworks.amethyst.api.mutator.AttributeMutator
 import org.hexworks.cobalt.datatypes.Maybe
 import kotlin.reflect.KClass
 
+@Suppress("UNCHECKED_CAST")
 class DefaultAttributeMutator(attributes: Set<Attribute>) : AttributeMutator {
 
     override val attributes: Sequence<Attribute>
@@ -22,7 +23,11 @@ class DefaultAttributeMutator(attributes: Set<Attribute>) : AttributeMutator {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : Attribute> findAttribute(klass: KClass<T>): Maybe<T> {
-        return Maybe.ofNullable(currentAttributes.values.firstOrNull { klass.isInstance(it) } as? T)
+        return Maybe.ofNullable(findAttributeOrNull(klass))
+    }
+
+    override fun <T : Attribute> findAttributeOrNull(klass: KClass<T>): T? {
+        return currentAttributes.values.firstOrNull { klass.isInstance(it) } as? T
     }
 
     override fun addAttribute(attribute: Attribute) {

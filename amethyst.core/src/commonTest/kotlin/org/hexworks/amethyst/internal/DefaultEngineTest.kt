@@ -30,7 +30,7 @@ class DefaultEngineTest {
 
         target.addEntity(newEntityOfType(Type0) {
             behaviors(object : BaseBehavior<TestContext>() {
-                override suspend fun update(entity: Entity<EntityType, TestContext>, context: TestContext): Boolean {
+                override suspend fun update(entity: Entity<out EntityType, TestContext>, context: TestContext): Boolean {
                     updates[0] = true
                     return true
                 }
@@ -38,7 +38,7 @@ class DefaultEngineTest {
         })
         target.addEntity(newEntityOfType(Type1) {
             behaviors(object : BaseBehavior<TestContext>() {
-                override suspend fun update(entity: Entity<EntityType, TestContext>, context: TestContext): Boolean {
+                override suspend fun update(entity: Entity<out EntityType, TestContext>, context: TestContext): Boolean {
                     updates[1] = true
                     return true
                 }

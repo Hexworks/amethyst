@@ -11,7 +11,7 @@ class CompositeAndBehavior<C : Context>(
         private val second: Behavior<C>
 ) : BaseBehavior<C>() {
 
-    override suspend fun update(entity: Entity<EntityType, C>, context: C): Boolean {
+    override suspend fun update(entity: Entity<out EntityType, C>, context: C): Boolean {
         return first.update(entity, context) && second.update(entity, context)
     }
 

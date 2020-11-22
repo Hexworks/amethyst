@@ -11,5 +11,5 @@ import org.hexworks.amethyst.api.system.System
  * An [MutableEntity] is an object composed of [Attribute]s and [System]s representing a cohesive whole.
  * The difference form [Entity] is that a [MutableEntity] enables adding and removing systems and attributes.
  */
-interface MutableEntity<out T : EntityType, C : Context>
+interface MutableEntity<T : EntityType, C : Context>
     : Entity<T, C>, AttributeMutator, FacetMutator<C>, BehaviorMutator<C>

@@ -4,10 +4,9 @@ import org.hexworks.amethyst.api.Attribute
 import org.hexworks.amethyst.api.Context
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
+import org.hexworks.amethyst.api.extensions.FacetWithContext
 import org.hexworks.amethyst.api.system.Behavior
-import org.hexworks.amethyst.api.system.Facet
 import org.hexworks.amethyst.internal.entity.DefaultEntity
-import kotlin.reflect.KClass
 
 /**
  * A builder for creating [Entity] objects.
@@ -15,7 +14,7 @@ import kotlin.reflect.KClass
 class EntityBuilder<T : EntityType, C : Context>(private val type: T) {
 
     private var attributes = setOf<Attribute>()
-    private var facets = setOf<Facet<C>>()
+    private var facets = setOf<FacetWithContext<C>>()
     private var behaviors = setOf<Behavior<C>>()
 
     /**
@@ -30,7 +29,7 @@ class EntityBuilder<T : EntityType, C : Context>(private val type: T) {
      * Sets the supplied [facets] to this builder.
      * Any previous values are overwritten.
      */
-    fun facets(vararg facets: Facet<C>) = also {
+    fun facets(vararg facets: FacetWithContext<C>) = also {
         this.facets = facets.toSet()
     }
 

@@ -1,13 +1,21 @@
+@file:Suppress("UnstableApiUsage")
+
 import Libs.cobaltCore
 import Libs.kotlinxCollectionsImmutable
 import Libs.kotlinxCoroutines
+import TestLibs.kotlinTestAnnotationsCommon
+import TestLibs.kotlinTestCommon
+import TestLibs.kotlinxCoroutinesTest
+import org.jetbrains.dokka.gradle.DokkaTask
+import java.net.URL
 
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.dokka")
     id("maven-publish")
-    id("signing")")
+    id("signing")
 }
+
 
 kotlin {
 
@@ -26,34 +34,64 @@ kotlin {
         commonMain {
             dependencies {
                 api(kotlin("reflect"))
-
                 api(kotlinxCoroutines)
                 api(kotlinxCollectionsImmutable)
-
                 api(cobaltCore)
             }
         }
-    }
-
-    dependencies {
-
-        with(Libs) {
-            jvmMainApi(kotlinxCoroutines)
-            jvmMainApi(slf4jApi)
-            jvmMainApi(logbackClassic)
-
-            jsMainApi(kotlinStdLibJs)
-            jsMainApi(kotlinxCoroutinesJs)
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlinTestCommon)
+                implementation(kotlinTestAnnotationsCommon)
+            }
         }
+        val jvmMain by getting {
+            dependencies {
+            }
+        }
+        val jvmTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+                implementation(kotlin("test-junit"))
+            }
+        }
+        val jsMain by getting {
+            dependencies {
+            }
+        }
+        val jsTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+                implementation(kotlin("test-js"))
+            }
+        }
+    }
+}
 
-        with(TestLibs) {
-            commonTestApi(kotlinTestCommon)
-            commonTestApi(kotlinTestAnnotationsCommon)
-            commonTestApi(kotlinxCoroutinesTest)
+tasks.withType<DokkaTask>().configureEach {
+    dokkaSourceSets {
+        configureEach {
+            includeNonPublic.set(false)
+            skipDeprecated.set(false)
+            skipEmptyPackages.set(true)
+            includes.from("module.md", "packages.md")
 
-            jvmTestApi(kotlinTestJunit)
+            samples.from("src/commonMain/kotlin/org/hexworks/zircon/samples")
 
-            jsTestApi(kotlinTestJs)
+            sourceLink {
+                localDirectory.set(file("src/commonMain/kotlin"))
+                remoteUrl.set(URL("https://github.com/Hexworks/zircon/tree/master/zircon.core/src/commonMain/kotlin"))
+                remoteLineSuffix.set("#L")
+            }
+            sourceLink {
+                localDirectory.set(file("src/jvmMain/kotlin"))
+                remoteUrl.set(URL("https://github.com/Hexworks/zircon/tree/master/zircon.core/src/jvmMain/kotlin"))
+                remoteLineSuffix.set("#L")
+            }
+            jdkVersion.set(8)
+            noStdlibLink.set(false)
+            noJdkLink.set(false)
+            noAndroidSdkLink.set(false)
         }
     }
 }
@@ -62,7 +100,7 @@ publishing {
     publishWith(
             project = project,
             module = "amethyst.core",
-            desc = "Core package of Amethyst."
+            desc = "Core component of Amethyst."
     )
 }
 

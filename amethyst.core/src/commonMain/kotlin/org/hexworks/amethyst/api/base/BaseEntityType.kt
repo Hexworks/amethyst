@@ -10,4 +10,19 @@ abstract class BaseEntityType(
         override val name: String = "unknown",
         override val description: String = "",
         override val id: UUID = UUID.randomUUID()
-) : EntityType
+) : EntityType {
+    final override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as BaseEntityType
+
+        if (id != other.id) return false
+
+        return true
+    }
+
+    final override fun hashCode(): Int {
+        return id.hashCode()
+    }
+}

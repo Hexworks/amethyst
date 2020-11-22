@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package org.hexworks.amethyst.internal
 
 import kotlinx.coroutines.CoroutineScope
@@ -29,12 +31,12 @@ class DefaultEngine<T : Context>(
     }
 
     @Synchronized
-    override fun addEntity(entity: Entity<EntityType, T>) {
-        entities.add(entity)
+    override fun addEntity(entity: Entity<out EntityType, T>) {
+        entities.add(entity as Entity<EntityType, T>)
     }
 
     @Synchronized
-    override fun removeEntity(entity: Entity<EntityType, T>) {
+    override fun removeEntity(entity: Entity<out EntityType, T>) {
         entities.remove(entity)
     }
 

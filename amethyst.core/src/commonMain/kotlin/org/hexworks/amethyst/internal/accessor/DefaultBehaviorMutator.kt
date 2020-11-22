@@ -17,9 +17,13 @@ class DefaultBehaviorMutator<C : Context>(behaviors: Set<Behavior<C>>) : Behavio
 
     private var currentBehaviors = behaviors.toPersistentSet()
 
-    @Suppress("UNCHECKED_CAST")
     override fun <T : Behavior<C>> findBehavior(klass: KClass<T>): Maybe<T> {
-        return Maybe.ofNullable(currentBehaviors.firstOrNull { klass.isInstance(it) } as? T)
+        return Maybe.ofNullable(findBehaviorOrNull(klass))
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : Behavior<C>> findBehaviorOrNull(klass: KClass<T>): T? {
+        return currentBehaviors.firstOrNull { klass.isInstance(it) } as? T
     }
 
     override fun addBehavior(behavior: Behavior<C>) {

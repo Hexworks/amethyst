@@ -1,13 +1,10 @@
 import Versions.cobaltVersion
-import Versions.kotlinVersion
 import Versions.kotlinxCollectionsImmutableVersion
 import Versions.kotlinxCoroutinesVersion
 import Versions.logbackVersion
 import Versions.slf4jVersion
 
 object Libs {
-
-    const val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect"
 
     const val kotlinxCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion"
     const val kotlinxCollectionsImmutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:$kotlinxCollectionsImmutableVersion"

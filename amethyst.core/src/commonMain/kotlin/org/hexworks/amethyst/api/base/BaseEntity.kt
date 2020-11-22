@@ -1,17 +1,14 @@
 package org.hexworks.amethyst.api.base
 
 import org.hexworks.amethyst.api.Attribute
-import org.hexworks.amethyst.api.Command
 import org.hexworks.amethyst.api.Context
-import org.hexworks.amethyst.api.Pass
-import org.hexworks.amethyst.api.Response
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.amethyst.api.entity.MutableEntity
+import org.hexworks.amethyst.api.extensions.FacetWithContext
 import org.hexworks.amethyst.api.mutator.AttributeMutator
 import org.hexworks.amethyst.api.mutator.BehaviorMutator
 import org.hexworks.amethyst.api.mutator.FacetMutator
 import org.hexworks.amethyst.api.system.Behavior
-import org.hexworks.amethyst.api.system.Facet
 import org.hexworks.cobalt.core.api.UUID
 
 /**
@@ -20,7 +17,7 @@ import org.hexworks.cobalt.core.api.UUID
 abstract class BaseEntity<T : EntityType, C : Context>(
         override val type: T,
         attributes: Set<Attribute> = setOf(),
-        facets: Set<Facet<C>> = setOf(),
+        facets: Set<FacetWithContext<C>> = setOf(),
         behaviors: Set<Behavior<C>> = setOf()
 ) : MutableEntity<T, C>,
         AttributeMutator by AttributeMutator.create(attributes),

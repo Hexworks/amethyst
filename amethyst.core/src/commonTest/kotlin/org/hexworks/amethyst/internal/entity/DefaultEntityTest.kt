@@ -9,6 +9,7 @@ import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.amethyst.api.system.Facet
 import org.hexworks.cobalt.core.platform.runTest
+import kotlin.reflect.KClass
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -190,8 +191,10 @@ class DefaultEntityTest {
         assertEquals(initialAttributesNumber + 1, target.attributes.toList().size);
     }
 
-    class TestCommand(override val source: Entity<TestType, TestContext>,
-                      override val context: TestContext = TestContext) : Command<TestType, TestContext>
+    class TestCommand(
+            override val source: Entity<TestType, TestContext>,
+            override val context: TestContext = TestContext
+    ) : Command<TestContext>
 
     object InitialAttribute : BaseAttribute()
     object AddedAttribute : BaseAttribute()
@@ -211,27 +214,24 @@ class DefaultEntityTest {
 
         private val updatedWith = mutableListOf<Pair<Entity<EntityType, TestContext>, TestContext>>()
 
-        fun wasUpdatedWith(entity: Entity<EntityType, TestContext>, context: TestContext): Boolean {
+        fun wasUpdatedWith(entity: Entity<out EntityType, TestContext>, context: TestContext): Boolean {
             return updatedWith.contains(entity to context)
         }
 
-        override suspend fun update(entity: Entity<EntityType, TestContext>, context: TestContext): Boolean {
-            updatedWith.add(entity to context)
+        @Suppress("UNCHECKED_CAST")
+        override suspend fun update(entity: Entity<out EntityType, TestContext>, context: TestContext): Boolean {
+            updatedWith.add(entity as Entity<EntityType, TestContext> to context)
             return updateResult
         }
     }
 
     abstract class TestFacet(
             private val response: Response
-    ) : BaseFacet<TestType, TestContext, TestCommand>() {
+    ) : BaseFacet<TestContext, TestCommand>(TestCommand::class) {
 
-        private val givenCommands = mutableListOf<Command<out EntityType, TestContext>>()
+        private val givenCommands = mutableListOf<Command<TestContext>>()
 
-        override suspend fun plus(other: Facet<TestType, TestContext, TestCommand>): Facet<TestType, TestContext, TestCommand> {
-            TODO("Not yet implemented")
-        }
-
-        fun wasGivenCommand(command: Command<out EntityType, TestContext>): Boolean {
+        fun wasGivenCommand(command: Command<TestContext>): Boolean {
             return givenCommands.contains(command)
         }
 

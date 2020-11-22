@@ -16,7 +16,7 @@ import org.hexworks.cobalt.core.api.UUID
  * For example a Goblin entity can be composed of `CombatHandler`, `ArmorUser` and `HunterSeeker`
  * [System]s with a `Creature` [Attribute] to represent how a Goblin works.
  */
-interface Entity<out T : EntityType, C : Context> : AttributeAccessor, FacetAccessor<C>, BehaviorAccessor<C> {
+interface Entity<T : EntityType, C : Context> : AttributeAccessor, FacetAccessor<C>, BehaviorAccessor<C> {
 
     /**
      * The unique [UUID] of this [Entity].
@@ -52,14 +52,14 @@ interface Entity<out T : EntityType, C : Context> : AttributeAccessor, FacetAcce
      * is updated next.
      * @return true if the [Command] can be processed by a [System] false if not.
      */
-    suspend fun sendCommand(command: Command<out EntityType, C>): Boolean
+    suspend fun sendCommand(command: Command<C>): Boolean
 
     /**
      * Makes this [Entity] immediately process this [Command].
      * @return the [Response] for the given [command]
      * @see [Response] for more info.
      */
-    suspend fun executeCommand(command: Command<out EntityType, C>): Response
+    suspend fun executeCommand(command: Command<C>): Response
 
     /**
      * Updates this [Entity] using the given [context]. See [Context] for more info about what a [context]

@@ -6,5 +6,5 @@ import org.hexworks.amethyst.api.entity.EntityType
 
 object TestBehavior : BaseBehavior<TestContext>() {
 
-    override suspend fun update(entity: Entity<EntityType, TestContext>, context: TestContext) = false
+    override suspend fun update(entity: Entity<out EntityType, TestContext>, context: TestContext) = false
 }
