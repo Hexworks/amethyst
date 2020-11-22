@@ -5,6 +5,7 @@ import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.mutator.AttributeMutator
 import org.hexworks.amethyst.internal.accessor.DefaultAttributeMutator
 import org.hexworks.cobalt.datatypes.Maybe
+import kotlin.jvm.JvmStatic
 import kotlin.reflect.KClass
 
 interface AttributeAccessor {
@@ -22,10 +23,16 @@ interface AttributeAccessor {
     /**
      * Returns the [Attribute] of the given class [T] (if any).
      */
-    fun <T : Attribute> findAttribute(klass: KClass<T>): Maybe<T>
+    fun <T : Attribute> findAttribute(klass: KClass<T>) = Maybe.ofNullable(findAttributeOrNull(klass))
+
+    /**
+     * Returns the [Attribute] of the given class [T] (if any).
+     */
+    fun <T : Attribute> findAttributeOrNull(klass: KClass<T>): T?
 
     companion object {
 
+        @JvmStatic
         fun create(attributes: Set<Attribute>): AttributeAccessor = DefaultAttributeMutator(attributes)
     }
 }

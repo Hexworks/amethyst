@@ -7,6 +7,7 @@ import org.hexworks.amethyst.api.base.BaseEntityType
 import org.hexworks.amethyst.api.base.BaseFacet
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
+import org.hexworks.amethyst.api.system.Facet
 import org.hexworks.cobalt.core.platform.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -186,7 +187,7 @@ class DefaultEntityTest {
         target.asMutableEntity().addAttribute(dataAttribute)
         target.asMutableEntity().addAttribute(dataAttribute)
 
-        assertEquals( initialAttributesNumber + 1, target.attributes.toList().size);
+        assertEquals(initialAttributesNumber + 1, target.attributes.toList().size);
     }
 
     class TestCommand(override val source: Entity<TestType, TestContext>,
@@ -220,15 +221,21 @@ class DefaultEntityTest {
         }
     }
 
-    abstract class TestFacet(private val response: Response) : BaseFacet<TestContext>() {
+    abstract class TestFacet(
+            private val response: Response
+    ) : BaseFacet<TestType, TestContext, TestCommand>() {
 
         private val givenCommands = mutableListOf<Command<out EntityType, TestContext>>()
+
+        override suspend fun plus(other: Facet<TestType, TestContext, TestCommand>): Facet<TestType, TestContext, TestCommand> {
+            TODO("Not yet implemented")
+        }
 
         fun wasGivenCommand(command: Command<out EntityType, TestContext>): Boolean {
             return givenCommands.contains(command)
         }
 
-        override suspend fun executeCommand(command: Command<out EntityType, TestContext>): Response {
+        override suspend fun executeCommand(command: TestCommand): Response {
             givenCommands.add(command)
             return response
         }

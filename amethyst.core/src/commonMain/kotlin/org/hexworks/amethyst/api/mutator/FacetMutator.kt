@@ -5,6 +5,7 @@ import org.hexworks.amethyst.api.accessor.FacetAccessor
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.system.Facet
 import org.hexworks.amethyst.internal.accessor.DefaultFacetMutator
+import kotlin.jvm.JvmStatic
 
 interface FacetMutator<C : Context> : FacetAccessor<C> {
 
@@ -20,6 +21,7 @@ interface FacetMutator<C : Context> : FacetAccessor<C> {
 
     companion object {
 
+        @JvmStatic
         fun <C : Context> create(facets: Set<Facet<C>>): FacetMutator<C> = DefaultFacetMutator(facets)
     }
 }

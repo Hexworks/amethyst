@@ -7,8 +7,12 @@ import org.hexworks.cobalt.core.api.UUID
 import kotlin.reflect.KClass
 
 /**
- * A [System] is responsible for updating the internal state
- * ([Attribute]s) of an [Entity].
+ * A [System] is responsible for updating the internal state of an [Entity].
+ * The internal state is represented by [Attribute]s.
+ *
+ * This also means that [System]s shouldn't have mutable state in them.
+ *
+ * A typical [System] implementation is a singleton `object` (not a `class`).
  */
 interface System<C : Context> {
 
@@ -18,7 +22,7 @@ interface System<C : Context> {
     val id: UUID
 
     /**
-     * The [Set] of [Attribute]s which must be present in this [System]
+     * The [Set] of [Attribute]s that must be present in this [System]
      */
     val mandatoryAttributes: Set<KClass<out Attribute>>
 }

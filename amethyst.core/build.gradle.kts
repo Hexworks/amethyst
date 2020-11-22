@@ -1,14 +1,19 @@
+import Libs.cobaltCore
+import Libs.kotlinxCollectionsImmutable
+import Libs.kotlinxCoroutines
+
 plugins {
     kotlin("multiplatform")
+    id("org.jetbrains.dokka")
     id("maven-publish")
-    id("signing")
+    id("signing")")
 }
 
 kotlin {
 
     jvm {
-        jvmTarget(JavaVersion.VERSION_1_8)
         withJava()
+        jvmTarget(JavaVersion.VERSION_1_8)
     }
 
     js {
@@ -17,18 +22,22 @@ kotlin {
         }
     }
 
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(kotlin("reflect"))
+
+                api(kotlinxCoroutines)
+                api(kotlinxCollectionsImmutable)
+
+                api(cobaltCore)
+            }
+        }
+    }
+
     dependencies {
 
         with(Libs) {
-            commonMainApi(kotlinStdLibCommon)
-            commonMainApi(kotlinReflect)
-
-            commonMainApi(kotlinxCoroutinesCommon)
-            commonMainApi(kotlinxCollectionsImmutable)
-
-            commonMainApi(cobaltCore)
-
-            jvmMainApi(kotlinStdLibJdk8)
             jvmMainApi(kotlinxCoroutines)
             jvmMainApi(slf4jApi)
             jvmMainApi(logbackClassic)

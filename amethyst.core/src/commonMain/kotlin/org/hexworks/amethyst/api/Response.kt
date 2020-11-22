@@ -13,7 +13,7 @@ sealed class Response
 object Consumed : Response()
 
 /**
- * Use [Pass] to indicate that the [Command] was not handled.
+ * Use [Pass] to indicate that the [Command] was not handled, or was partially handled.
  */
 object Pass : Response()
 

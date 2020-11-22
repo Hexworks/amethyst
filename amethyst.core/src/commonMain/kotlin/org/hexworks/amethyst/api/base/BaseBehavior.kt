@@ -6,11 +6,12 @@ import org.hexworks.amethyst.api.system.Behavior
 import org.hexworks.cobalt.core.api.UUID
 import kotlin.reflect.KClass
 
+/**
+ * Base class that can be used to create custom [Behavior] implementations.
+ */
 abstract class BaseBehavior<C : Context>(
         vararg mandatoryAttribute: KClass<out Attribute>
 ) : Behavior<C> {
-
     override val id = UUID.randomUUID()
     override val mandatoryAttributes: Set<KClass<out Attribute>> = mandatoryAttribute.toSet()
-
 }

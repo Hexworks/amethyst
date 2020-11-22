@@ -4,6 +4,7 @@ import org.hexworks.amethyst.api.Attribute
 import org.hexworks.amethyst.api.Command
 import org.hexworks.amethyst.api.Context
 import org.hexworks.amethyst.api.Response
+import org.hexworks.amethyst.api.system.Behavior
 import org.hexworks.amethyst.api.accessor.AttributeAccessor
 import org.hexworks.amethyst.api.accessor.BehaviorAccessor
 import org.hexworks.amethyst.api.accessor.FacetAccessor
@@ -22,6 +23,10 @@ interface Entity<out T : EntityType, C : Context> : AttributeAccessor, FacetAcce
      */
     val id: UUID
 
+    /**
+     * Tells whether this [Entity] needs update or not. An update is needed
+     * when the entity has [Behavior]s, or it has unprocessed [Command]s.
+     */
     val needsUpdate: Boolean
 
     /**

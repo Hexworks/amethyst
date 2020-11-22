@@ -7,8 +7,8 @@ import org.hexworks.amethyst.internal.system.CompositeAndBehavior
 import org.hexworks.amethyst.internal.system.CompositeOrBehavior
 
 /**
- * A [Behavior] is a [System] which performs actions autonomously
- * on entities whenever they are [update]d.
+ * A [Behavior] is a [System] that performs autonomous actions whenever
+ * [update] is called on them.
  */
 interface Behavior<C : Context> : System<C> {
 
@@ -30,7 +30,7 @@ interface Behavior<C : Context> : System<C> {
     }
 
     /**
-     * Performs an and combination of this [Behavior] and the [other] [Behavior]:
+     * Performs a logical *and* combination of this [Behavior] and the [other] [Behavior]:
      * When [update] is called it is run on this one first, and then on [other].
      * @return their results `and`-ed together (it is only a success if both updates
      * are successes).

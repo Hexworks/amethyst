@@ -4,6 +4,7 @@ import org.hexworks.amethyst.api.Attribute
 import org.hexworks.amethyst.api.accessor.AttributeAccessor
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.internal.accessor.DefaultAttributeMutator
+import kotlin.jvm.JvmStatic
 
 interface AttributeMutator : AttributeAccessor {
 
@@ -19,6 +20,7 @@ interface AttributeMutator : AttributeAccessor {
 
     companion object {
 
+        @JvmStatic
         fun create(attributes: Set<Attribute>): AttributeMutator = DefaultAttributeMutator(attributes)
     }
 }

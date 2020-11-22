@@ -7,6 +7,7 @@ import org.hexworks.amethyst.api.base.BaseEntityType
 import org.hexworks.amethyst.api.base.BaseFacet
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
+import org.hexworks.amethyst.internal.entity.DefaultEntityTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -72,13 +73,20 @@ class EntityBuilderTest {
         }
     }
 
-    object FacetWithMandatoryAttribute : BaseFacet<TestContext>(MandatoryAttribute::class) {
-        override suspend fun executeCommand(command: Command<out EntityType, TestContext>): Response {
-            TODO("not implemented")
+    object FacetWithMandatoryAttribute : BaseFacet<TestType, TestContext, TestCommand>(MandatoryAttribute::class) {
+        override suspend fun executeCommand(command: TestCommand): Response {
+            TODO("Not yet implemented")
         }
     }
 
     object TestType : BaseEntityType("test")
 
     object TestContext : Context
+
+    object TestCommand: Command<TestType, TestContext> {
+        override val context: TestContext
+            get() = TODO("Not yet implemented")
+        override val source: Entity<TestType, TestContext>
+            get() = TODO("Not yet implemented")
+    }
 }

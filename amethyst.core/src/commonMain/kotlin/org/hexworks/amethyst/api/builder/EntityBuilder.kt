@@ -61,7 +61,8 @@ class EntityBuilder<T : EntityType, C : Context>(private val type: T) {
                 type = type,
                 attributes = finalAttributes,
                 facets = finalFacets,
-                behaviors = finalBehaviors)
+                behaviors = finalBehaviors
+        )
     }
 
 }

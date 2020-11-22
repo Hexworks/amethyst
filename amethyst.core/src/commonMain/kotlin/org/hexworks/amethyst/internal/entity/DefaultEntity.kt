@@ -17,13 +17,14 @@ import org.hexworks.cobalt.logging.api.LoggerFactory
 class DefaultEntity<T : EntityType, C : Context>(
         type: T,
         attributes: Set<Attribute> = setOf(),
-        facets: Set<Facet<C>> = setOf(),
+        facets: Set<Facet<T, C, Command<T, C>>> = setOf(),
         behaviors: Set<Behavior<C>> = setOf()
 ) : BaseEntity<T, C>(
         type = type,
         attributes = attributes.plus(type),
         facets = facets,
-        behaviors = behaviors) {
+        behaviors = behaviors
+) {
 
     private val eventStack = mutableListOf<Command<out EntityType, C>>()
     private val logger = LoggerFactory.getLogger(Entity::class)
@@ -46,6 +47,7 @@ class DefaultEntity<T : EntityType, C : Context>(
             var lastCommand = command
             while (iter.hasNext() && response != Consumed) {
                 response = iter.next().executeCommand(lastCommand)
+                // TODO: we need to process responses while they are CommandResponses!
                 if (response is CommandResponse<*>) {
                     lastCommand = response.command as Command<out EntityType, C>
                 }

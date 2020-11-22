@@ -5,6 +5,7 @@ import org.hexworks.amethyst.api.accessor.BehaviorAccessor
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.system.Behavior
 import org.hexworks.amethyst.internal.accessor.DefaultBehaviorMutator
+import kotlin.jvm.JvmStatic
 
 interface BehaviorMutator<C : Context> : BehaviorAccessor<C> {
 
@@ -20,6 +21,7 @@ interface BehaviorMutator<C : Context> : BehaviorAccessor<C> {
 
     companion object {
 
+        @JvmStatic
         fun <C : Context> create(behaviors: Set<Behavior<C>>): BehaviorMutator<C> = DefaultBehaviorMutator(behaviors)
     }
 }

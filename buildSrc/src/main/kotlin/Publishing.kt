@@ -10,9 +10,9 @@ import org.gradle.kotlin.dsl.registering
 import org.gradle.kotlin.dsl.withType
 
 fun PublishingExtension.publishWith(
-    project: Project,
-    module: String,
-    desc: String
+        project: Project,
+        module: String,
+        desc: String
 ) {
 
     with(project) {

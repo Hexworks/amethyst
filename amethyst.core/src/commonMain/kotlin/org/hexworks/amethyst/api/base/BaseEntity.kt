@@ -14,6 +14,9 @@ import org.hexworks.amethyst.api.system.Behavior
 import org.hexworks.amethyst.api.system.Facet
 import org.hexworks.cobalt.core.api.UUID
 
+/**
+ * Base class that can be used to create custom [MutableEntity] implementations.
+ */
 abstract class BaseEntity<T : EntityType, C : Context>(
         override val type: T,
         attributes: Set<Attribute> = setOf(),
@@ -25,18 +28,6 @@ abstract class BaseEntity<T : EntityType, C : Context>(
         BehaviorMutator<C> by BehaviorMutator.create(behaviors) {
 
     override val id = UUID.randomUUID()
-
-    override suspend fun sendCommand(command: Command<out EntityType, C>): Boolean {
-        return false
-    }
-
-    override suspend fun executeCommand(command: Command<out EntityType, C>): Response {
-        return Pass
-    }
-
-    override suspend fun update(context: C): Boolean {
-        return false
-    }
 
     override fun asMutableEntity(): MutableEntity<T, C> {
         return this

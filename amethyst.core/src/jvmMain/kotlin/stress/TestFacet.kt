@@ -1,11 +1,12 @@
 package stress
 
-import org.hexworks.amethyst.api.Command
 import org.hexworks.amethyst.api.Pass
+import org.hexworks.amethyst.api.Response
 import org.hexworks.amethyst.api.base.BaseFacet
-import org.hexworks.amethyst.api.entity.EntityType
 
-object TestFacet : BaseFacet<TestContext>() {
+object TestFacet : BaseFacet<TestEntityType, TestContext, TestCommand>() {
 
-    override suspend fun executeCommand(command: Command<out EntityType, TestContext>) = Pass
+    override suspend fun executeCommand(command: TestCommand): Response {
+        return Pass
+    }
 }
