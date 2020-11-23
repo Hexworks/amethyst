@@ -9,6 +9,8 @@ import kotlin.reflect.KClass
 /**
  * Creates a state machine out of this [Facet] using [commonAncestor] as
  * the acceptable message type.
+ *
+ * @sample org.hexworks.amethyst.samples.StateMachineSample
  */
 fun <C : Context, A : Message<C>, M : A> Facet<C, M>.toStateMachine(
         commonAncestor: KClass<A>
