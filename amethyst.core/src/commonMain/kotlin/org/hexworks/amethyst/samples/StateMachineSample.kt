@@ -82,12 +82,15 @@ object InventoryHandler : BaseFacet<MyContext, StateChanged<MyContext>>(messageT
 
 }
 
-fun runExample() {
-    val entity = EntityBuilder.newBuilder<MyType, MyContext>(MyType)
-            .attributes(HiddenInventory(setOf("gold", "silver")))
-            .facets(
-                    InventoryHandler,
-                    Unlockable.toStateMachine(BarrierAction::class)
-            )
-            .build()
+class StateMachineSample {
+
+    fun runExample() {
+        val entity = EntityBuilder.newBuilder<MyType, MyContext>(MyType)
+                .attributes(HiddenInventory(setOf("gold", "silver")))
+                .facets(
+                        InventoryHandler,
+                        Unlockable.toStateMachine(BarrierAction::class)
+                )
+                .build()
+    }
 }
