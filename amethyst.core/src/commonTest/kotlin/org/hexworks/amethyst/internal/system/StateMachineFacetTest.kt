@@ -23,7 +23,6 @@ class StateMachineFacetTest {
     fun setUp() {
         target = StateMachineFacet(BarrierAction::class, Unlockable)
         entity = EntityBuilder.newBuilder<MyType, MyContext>(MyType)
-                .attributes(BarrierData())
                 .facets(target)
                 .build()
     }

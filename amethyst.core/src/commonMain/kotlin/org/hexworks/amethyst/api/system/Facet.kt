@@ -18,6 +18,8 @@ import kotlin.reflect.KClass
  * [Facet]s can be composed TODO
  *
  * @see Attribute
+ *
+ * @sample org.hexworks.amethyst.samples.StateMachineSample
  */
 interface Facet<C : Context, M : Message<C>> : System<C> {
 
