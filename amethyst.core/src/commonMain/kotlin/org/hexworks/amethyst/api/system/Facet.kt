@@ -2,7 +2,7 @@ package org.hexworks.amethyst.api.system
 
 import org.hexworks.amethyst.api.*
 import org.hexworks.amethyst.internal.system.CompositeFacet
-import org.hexworks.amethyst.internal.system.StateMachineFacet
+import org.hexworks.amethyst.api.extensions.toStateMachine
 import kotlin.reflect.KClass
 
 /**
@@ -15,9 +15,20 @@ import kotlin.reflect.KClass
  *
  * [Facet]s are typically triggered when [Behavior]s are [Behavior.update]d.
  *
- * [Facet]s can be composed TODO
+ * [Facet]s can be composed using the [Facet.compose] function. In this case [messageType]
+ * will be used as a base class for the possible messages the composition can receive.
+ * In this case child facets are processed in order until either one of them returns something
+ * other than [Pass].
+ *
+ * Alternatively a state machine can be created from a [Facet] using [Facet.toStateMachine]
+ * that will dispatch possible messages using a [messageType]. In this form of composition
+ * there is only one state ([Facet]) that's active and the next state can be returned from
+ * that [Facet] using a [StateResponse]. This is an amethystesque implementation of the
+ * regular *State* design pattern.
  *
  * @see Attribute
+ * @see StateResponse
+ * @see Facet.toStateMachine
  *
  * @sample org.hexworks.amethyst.samples.StateMachineSample
  */
@@ -45,7 +56,8 @@ interface Facet<C : Context, M : Message<C>> : System<C> {
     /**
      * Composes this [Facet] with [other] which means that when [receive]
      * is called its result will be passed to [other]'s [receive] when
-     * the [Response] is [Pass]
+     * the [Response] is [Pass] (until all options are exhausted, in this
+     * case [Pass] will be returned).
      */
     fun compose(
             other: Facet<C, M>,

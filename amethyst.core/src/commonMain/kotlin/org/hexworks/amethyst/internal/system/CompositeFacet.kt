@@ -26,7 +26,7 @@ class CompositeFacet<C : Context, P : Message<C>>(
     override suspend fun tryReceive(message: Message<C>): Response {
         val iter = children.iterator()
         var response: Response = Pass
-        while (iter.hasNext() && response != Consumed && response !is MessageResponse<*>) {
+        while (iter.hasNext() && response is Pass) {
             response = iter.next().tryReceive(message)
         }
         return response
