@@ -3,21 +3,21 @@
 package org.hexworks.amethyst.api.base
 
 import org.hexworks.amethyst.api.*
-import org.hexworks.amethyst.api.entity.EntityType
+import org.hexworks.amethyst.api.message.StateChanged
 import org.hexworks.amethyst.api.system.Facet
 import org.hexworks.cobalt.core.api.UUID
 import kotlin.reflect.KClass
 
-abstract class BaseFacet<C : Context, P : Command<C>>(
-        override val commandType: KClass<P>,
+abstract class BaseFacet<C : Context, P : Message<C>>(
+        override val messageType: KClass<P>,
         vararg mandatoryAttribute: KClass<out Attribute>
 ) : Facet<C, P> {
     override val id = UUID.randomUUID()
     override val mandatoryAttributes: Set<KClass<out Attribute>> = mandatoryAttribute.toSet()
 
-    override suspend fun tryExecuteCommand(command: Command<C>): Response {
-        return if (command::class == commandType) {
-            executeCommand(command as P)
+    override suspend fun tryReceive(message: Message<C>): Response {
+        return if (message::class == messageType) {
+            receive(message as P)
         } else Pass
     }
 }

@@ -1,0 +1,1 @@
+sourceset_dependencies = '{":amethyst.core:dokkaHtml/commonMain": [], ":amethyst.core:dokkaHtml/jsMain": [":amethyst.core:dokkaHtml/commonMain"], ":amethyst.core:dokkaHtml/jvmMain": [":amethyst.core:dokkaHtml/commonMain"]}'

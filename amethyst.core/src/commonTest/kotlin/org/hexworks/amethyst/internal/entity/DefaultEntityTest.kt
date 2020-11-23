@@ -7,9 +7,7 @@ import org.hexworks.amethyst.api.base.BaseEntityType
 import org.hexworks.amethyst.api.base.BaseFacet
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
-import org.hexworks.amethyst.api.system.Facet
 import org.hexworks.cobalt.core.platform.runTest
-import kotlin.reflect.KClass
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -153,7 +151,7 @@ class DefaultEntityTest {
 
         target.asMutableEntity().addFacet(consumingFacet)
 
-        val command = TestCommand(target)
+        val command = TestMessage(target)
 
         target.executeCommand(command)
 
@@ -170,7 +168,7 @@ class DefaultEntityTest {
         target.asMutableEntity().addFacet(consumingFacet)
         target.asMutableEntity().addFacet(wannabeConsumingFacet)
 
-        val command = TestCommand(target)
+        val command = TestMessage(target)
 
         target.executeCommand(command)
 
@@ -191,10 +189,10 @@ class DefaultEntityTest {
         assertEquals(initialAttributesNumber + 1, target.attributes.toList().size);
     }
 
-    class TestCommand(
+    class TestMessage(
             override val source: Entity<TestType, TestContext>,
             override val context: TestContext = TestContext
-    ) : Command<TestContext>
+    ) : Message<TestContext>
 
     object InitialAttribute : BaseAttribute()
     object AddedAttribute : BaseAttribute()
@@ -227,16 +225,16 @@ class DefaultEntityTest {
 
     abstract class TestFacet(
             private val response: Response
-    ) : BaseFacet<TestContext, TestCommand>(TestCommand::class) {
+    ) : BaseFacet<TestContext, TestMessage>(TestMessage::class) {
 
-        private val givenCommands = mutableListOf<Command<TestContext>>()
+        private val givenCommands = mutableListOf<Message<TestContext>>()
 
-        fun wasGivenCommand(command: Command<TestContext>): Boolean {
-            return givenCommands.contains(command)
+        fun wasGivenCommand(message: Message<TestContext>): Boolean {
+            return givenCommands.contains(message)
         }
 
-        override suspend fun executeCommand(command: TestCommand): Response {
-            givenCommands.add(command)
+        override suspend fun receive(message: TestMessage): Response {
+            givenCommands.add(message)
             return response
         }
     }

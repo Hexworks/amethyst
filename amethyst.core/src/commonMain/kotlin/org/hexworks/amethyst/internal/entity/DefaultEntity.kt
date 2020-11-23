@@ -1,8 +1,8 @@
 package org.hexworks.amethyst.internal.entity
 
 import org.hexworks.amethyst.api.Attribute
-import org.hexworks.amethyst.api.Command
-import org.hexworks.amethyst.api.CommandResponse
+import org.hexworks.amethyst.api.Message
+import org.hexworks.amethyst.api.MessageResponse
 import org.hexworks.amethyst.api.Consumed
 import org.hexworks.amethyst.api.Context
 import org.hexworks.amethyst.api.Pass
@@ -27,30 +27,30 @@ class DefaultEntity<T : EntityType, C : Context>(
         behaviors = behaviors
 ) {
 
-    private val eventStack = mutableListOf<Command<C>>()
+    private val eventStack = mutableListOf<Message<C>>()
     private val logger = LoggerFactory.getLogger(Entity::class)
 
     override val needsUpdate: Boolean
         get() = hasBehaviors || eventStack.isNotEmpty()
 
-    override suspend fun sendCommand(command: Command<C>): Boolean {
-        logger.debug("Receiving command '$command' on entity '$this'.")
-        eventStack.add(command)
+    override suspend fun sendCommand(message: Message<C>): Boolean {
+        logger.debug("Receiving command '$message' on entity '$this'.")
+        eventStack.add(message)
         return false
     }
 
     @Suppress("UNCHECKED_CAST")
-    override suspend fun executeCommand(command: Command<C>): Response {
-        logger.debug("Executing entity command '$command' on entity $this.")
+    override suspend fun executeCommand(message: Message<C>): Response {
+        logger.debug("Executing entity command '$message' on entity $this.")
         return if (hasFacets) {
-            val iter: Iterator<Facet<C, Command<C>>> = facets.iterator() as Iterator<Facet<C, Command<C>>>
+            val iter: Iterator<Facet<C, Message<C>>> = facets.iterator() as Iterator<Facet<C, Message<C>>>
             var response: Response = Pass
-            var lastCommand = command
+            var lastCommand = message
             while (iter.hasNext() && response != Consumed) {
-                response = iter.next().tryExecuteCommand(lastCommand)
+                response = iter.next().tryReceive(lastCommand)
                 // TODO: we need to process responses while they are CommandResponses!
-                if (response is CommandResponse<*>) {
-                    lastCommand = response.command as Command<C>
+                if (response is MessageResponse<*>) {
+                    lastCommand = response.message as Message<C>
                 }
             }
             response

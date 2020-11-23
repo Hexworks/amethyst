@@ -1,7 +1,7 @@
 package org.hexworks.amethyst.api.entity
 
 import org.hexworks.amethyst.api.Attribute
-import org.hexworks.amethyst.api.Command
+import org.hexworks.amethyst.api.Message
 import org.hexworks.amethyst.api.Context
 import org.hexworks.amethyst.api.Response
 import org.hexworks.amethyst.api.system.Behavior
@@ -25,7 +25,7 @@ interface Entity<T : EntityType, C : Context> : AttributeAccessor, FacetAccessor
 
     /**
      * Tells whether this [Entity] needs update or not. An update is needed
-     * when the entity has [Behavior]s, or it has unprocessed [Command]s.
+     * when the entity has [Behavior]s, or it has unprocessed [Message]s.
      */
     val needsUpdate: Boolean
 
@@ -48,18 +48,18 @@ interface Entity<T : EntityType, C : Context> : AttributeAccessor, FacetAccessor
         get() = type.description
 
     /**
-     * Adds the given [Command] to this [Entity] for processing. It will be processed when the [Entity]
+     * Adds the given [Message] to this [Entity] for processing. It will be processed when the [Entity]
      * is updated next.
-     * @return true if the [Command] can be processed by a [System] false if not.
+     * @return true if the [Message] can be processed by a [System] false if not.
      */
-    suspend fun sendCommand(command: Command<C>): Boolean
+    suspend fun sendCommand(message: Message<C>): Boolean
 
     /**
-     * Makes this [Entity] immediately process this [Command].
-     * @return the [Response] for the given [command]
+     * Makes this [Entity] immediately process this [Message].
+     * @return the [Response] for the given [message]
      * @see [Response] for more info.
      */
-    suspend fun executeCommand(command: Command<C>): Response
+    suspend fun executeCommand(message: Message<C>): Response
 
     /**
      * Updates this [Entity] using the given [context]. See [Context] for more info about what a [context]

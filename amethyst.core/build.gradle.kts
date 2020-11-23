@@ -76,16 +76,16 @@ tasks.withType<DokkaTask>().configureEach {
             skipEmptyPackages.set(true)
             includes.from("module.md", "packages.md")
 
-            samples.from("src/commonMain/kotlin/org/hexworks/zircon/samples")
+            samples.from("src/commonMain/kotlin/org/hexworks/amethyst/samples")
 
             sourceLink {
                 localDirectory.set(file("src/commonMain/kotlin"))
-                remoteUrl.set(URL("https://github.com/Hexworks/zircon/tree/master/zircon.core/src/commonMain/kotlin"))
+                remoteUrl.set(URL("https://github.com/Hexworks/amethyst/tree/master/amethyst.core/src/commonMain/kotlin"))
                 remoteLineSuffix.set("#L")
             }
             sourceLink {
                 localDirectory.set(file("src/jvmMain/kotlin"))
-                remoteUrl.set(URL("https://github.com/Hexworks/zircon/tree/master/zircon.core/src/jvmMain/kotlin"))
+                remoteUrl.set(URL("https://github.com/Hexworks/amethyst/tree/master/amethyst.core/src/jvmMain/kotlin"))
                 remoteLineSuffix.set("#L")
             }
             jdkVersion.set(8)

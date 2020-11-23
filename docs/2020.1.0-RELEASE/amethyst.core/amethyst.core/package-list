@@ -1,0 +1,73 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:////PointingToDeclaration/[root]/index.html
+$dokka.location://addProcessor/Engine#Entity[ProcessorContext,Processor]/PointingToDeclaration/[root]/add-processor.html
+$dokka.location://main/#/PointingToDeclaration/[root]/main.html
+$dokka.location://processor/#kotlin.collections.Set[Attribute]#kotlin.coroutines.SuspendFunction1[ProcessorContext,kotlin.Boolean]/PointingToDeclaration/[root]/processor.html
+$dokka.location:/Attribute///PointingToDeclaration/[root]/-attribute/index.html
+$dokka.location:/Attribute/name/#/PointingToDeclaration/[root]/-attribute/name.html
+$dokka.location:/Behavior///PointingToDeclaration/[root]/-behavior/index.html
+$dokka.location:/Behavior/update/#Entity[TypeParam(bounds=[org.hexworks.amethyst.api.Context]),TypeParam(bounds=[EntityType[TypeParam(bounds=[org.hexworks.amethyst.api.Context])]])]#TypeParam(bounds=[org.hexworks.amethyst.api.Context])/PointingToDeclaration/[root]/-behavior/update.html
+$dokka.location:/Category///PointingToDeclaration/[root]/-category/index.html
+$dokka.location:/Category/Category/#kotlin.String/PointingToDeclaration/[root]/-category/-category.html
+$dokka.location:/Category/component1/#/PointingToDeclaration/[root]/-category/component1.html
+$dokka.location:/Category/copy/#kotlin.String/PointingToDeclaration/[root]/-category/copy.html
+$dokka.location:/Category/name/#/PointingToDeclaration/[root]/-category/name.html
+$dokka.location:/Category/value/#/PointingToDeclaration/[root]/-category/value.html
+$dokka.location:/CombatContext///PointingToDeclaration/[root]/-combat-context/index.html
+$dokka.location:/DependsOn///PointingToDeclaration/[root]/-depends-on/index.html
+$dokka.location:/DependsOn/DependsOn/#kotlin.collections.List[Entity[ProcessorContext,Processor]]/PointingToDeclaration/[root]/-depends-on/-depends-on.html
+$dokka.location:/DependsOn/component1/#/PointingToDeclaration/[root]/-depends-on/component1.html
+$dokka.location:/DependsOn/copy/#kotlin.collections.List[Entity[ProcessorContext,Processor]]/PointingToDeclaration/[root]/-depends-on/copy.html
+$dokka.location:/DependsOn/name/#/PointingToDeclaration/[root]/-depends-on/name.html
+$dokka.location:/DependsOn/processors/#/PointingToDeclaration/[root]/-depends-on/processors.html
+$dokka.location:/Engine///PointingToDeclaration/[root]/-engine/index.html
+$dokka.location:/Engine/Engine/#kotlin.coroutines.CoroutineContext/PointingToDeclaration/[root]/-engine/-engine.html
+$dokka.location:/Engine/addEntity/#Entity[TypeParam(bounds=[org.hexworks.amethyst.api.Context]),TypeParam(bounds=[EntityType[TypeParam(bounds=[org.hexworks.amethyst.api.Context])]])]/PointingToDeclaration/[root]/-engine/add-entity.html
+$dokka.location:/Engine/coroutineContext/#/PointingToDeclaration/[root]/-engine/coroutine-context.html
+$dokka.location:/Engine/removeEntity/#Entity[TypeParam(bounds=[org.hexworks.amethyst.api.Context]),TypeParam(bounds=[EntityType[TypeParam(bounds=[org.hexworks.amethyst.api.Context])]])]/PointingToDeclaration/[root]/-engine/remove-entity.html
+$dokka.location:/Engine/update/#kotlin.Long/PointingToDeclaration/[root]/-engine/update.html
+$dokka.location:/Entity///PointingToDeclaration/[root]/-entity/index.html
+$dokka.location:/Entity/Entity/#TypeParam(bounds=[EntityType[TypeParam(bounds=[org.hexworks.amethyst.api.Context])]])#kotlin.reflect.KClass[TypeParam(bounds=[org.hexworks.amethyst.api.Context])]#kotlin.collections.Set[Attribute]#kotlin.collections.Set[Behavior[TypeParam(bounds=[org.hexworks.amethyst.api.Context]),TypeParam(bounds=[EntityType[TypeParam(bounds=[org.hexworks.amethyst.api.Context])]])]]/PointingToDeclaration/[root]/-entity/-entity.html
+$dokka.location:/Entity/attributes/#/PointingToDeclaration/[root]/-entity/attributes.html
+$dokka.location:/Entity/behaviors/#/PointingToDeclaration/[root]/-entity/behaviors.html
+$dokka.location:/Entity/contextClass/#/PointingToDeclaration/[root]/-entity/context-class.html
+$dokka.location:/Entity/id/#/PointingToDeclaration/[root]/-entity/id.html
+$dokka.location:/Entity/type/#/PointingToDeclaration/[root]/-entity/type.html
+$dokka.location:/Entity/update/#TypeParam(bounds=[org.hexworks.amethyst.api.Context])/PointingToDeclaration/[root]/-entity/update.html
+$dokka.location:/EntityType///PointingToDeclaration/[root]/-entity-type/index.html
+$dokka.location:/EntityType/name/#/PointingToDeclaration/[root]/-entity-type/name.html
+$dokka.location:/FaunaContext///PointingToDeclaration/[root]/-fauna-context/index.html
+$dokka.location:/FloraContext///PointingToDeclaration/[root]/-flora-context/index.html
+$dokka.location:/LastUpdate///PointingToDeclaration/[root]/-last-update/index.html
+$dokka.location:/LastUpdate/LastUpdate/#kotlin.Long/PointingToDeclaration/[root]/-last-update/-last-update.html
+$dokka.location:/LastUpdate/component1/#/PointingToDeclaration/[root]/-last-update/component1.html
+$dokka.location:/LastUpdate/copy/#kotlin.Long/PointingToDeclaration/[root]/-last-update/copy.html
+$dokka.location:/LastUpdate/lastUpdate/#/PointingToDeclaration/[root]/-last-update/last-update.html
+$dokka.location:/LastUpdate/name/#/PointingToDeclaration/[root]/-last-update/name.html
+$dokka.location:/Processor///PointingToDeclaration/[root]/-processor/index.html
+$dokka.location:/Processor/name/#/PointingToDeclaration/[root]/-processor/name.html
+$dokka.location:/ProcessorContext///PointingToDeclaration/[root]/-processor-context/index.html
+$dokka.location:/ProcessorContext/ProcessorContext/#kotlin.Long#kotlin.sequences.Sequence[Entity[org.hexworks.amethyst.api.Context,EntityType[org.hexworks.amethyst.api.Context]]]/PointingToDeclaration/[root]/-processor-context/-processor-context.html
+$dokka.location:/ProcessorContext/component1/#/PointingToDeclaration/[root]/-processor-context/component1.html
+$dokka.location:/ProcessorContext/component2/#/PointingToDeclaration/[root]/-processor-context/component2.html
+$dokka.location:/ProcessorContext/copy/#kotlin.Long#kotlin.sequences.Sequence[Entity[org.hexworks.amethyst.api.Context,EntityType[org.hexworks.amethyst.api.Context]]]/PointingToDeclaration/[root]/-processor-context/copy.html
+$dokka.location:/ProcessorContext/currentTime/#/PointingToDeclaration/[root]/-processor-context/current-time.html
+$dokka.location:/ProcessorContext/entities/#/PointingToDeclaration/[root]/-processor-context/entities.html
+org.hexworks.amethyst.api
+org.hexworks.amethyst.api.accessor
+org.hexworks.amethyst.api.base
+org.hexworks.amethyst.api.builder
+org.hexworks.amethyst.api.entity
+org.hexworks.amethyst.api.extensions
+org.hexworks.amethyst.api.message
+org.hexworks.amethyst.api.mutator
+org.hexworks.amethyst.api.system
+org.hexworks.amethyst.internal
+org.hexworks.amethyst.internal.accessor
+org.hexworks.amethyst.internal.entity
+org.hexworks.amethyst.internal.system
+org.hexworks.amethyst.platform
+org.hexworks.amethyst.samples
+stress
+

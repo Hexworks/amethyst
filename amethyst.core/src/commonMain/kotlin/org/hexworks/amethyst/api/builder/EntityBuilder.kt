@@ -64,5 +64,10 @@ class EntityBuilder<T : EntityType, C : Context>(private val type: T) {
         )
     }
 
+    companion object {
+
+        fun <T : EntityType, C : Context> newBuilder(type: T) = EntityBuilder<T, C>(type)
+    }
+
 }
 
