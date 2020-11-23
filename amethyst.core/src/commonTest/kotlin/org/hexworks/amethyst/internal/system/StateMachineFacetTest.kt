@@ -9,6 +9,9 @@ import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.amethyst.api.message.StateChanged
 import org.hexworks.amethyst.platform.runTest
 import org.hexworks.amethyst.samples.*
+import org.hexworks.amethyst.samples.StateMachineSample.*
+import org.hexworks.amethyst.samples.StateMachineSample.BarrierAction.Open
+import org.hexworks.amethyst.samples.StateMachineSample.BarrierAction.Unlock
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
