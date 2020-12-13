@@ -1,5 +1,6 @@
 package org.hexworks.amethyst.api
 
+import org.hexworks.amethyst.api.extensions.toStateMachine
 import org.hexworks.amethyst.api.system.Facet
 
 /**
@@ -22,6 +23,11 @@ object Pass : Response()
  */
 data class MessageResponse<C : Context>(val message: Message<C>) : Response()
 
+/**
+ * Represents a state change. Returns a new [Facet] that should be used to handle the
+ * new state of a state machine.
+ * @see toStateMachine
+ */
 data class StateResponse<C : Context, P : Message<C>, F : Facet<C, P>>(
-        val facet: F
+    val facet: F
 ) : Response()

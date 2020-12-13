@@ -18,7 +18,7 @@ class DefaultEngineTest {
 
     @BeforeTest
     fun setUp() {
-        target = Engine.default()
+        target = Engine.create()
     }
 
     @Test

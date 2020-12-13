@@ -24,6 +24,6 @@ interface Engine<T : Context> {
 
     companion object {
 
-        fun <T : Context> default() = DefaultEngine<T>()
+        fun <T : Context> create(): Engine<T> = DefaultEngine()
     }
 }
