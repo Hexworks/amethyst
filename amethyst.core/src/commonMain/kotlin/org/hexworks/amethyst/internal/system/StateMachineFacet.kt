@@ -13,7 +13,8 @@ class StateMachineFacet<C : Context, P : Message<C>>(
         initialState: Facet<C, out P>
 ) : Facet<C, P> {
 
-    override val id = UUID.randomUUID()
+    override val id: UUID
+        get() = currentState.id
     override val mandatoryAttributes: Set<KClass<out Attribute>>
         get() = currentState.mandatoryAttributes
 
