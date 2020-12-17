@@ -4,11 +4,12 @@ import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.runBlocking
 import org.hexworks.amethyst.api.Attribute
 import org.hexworks.amethyst.api.Context
-import org.hexworks.amethyst.api.Engines
+import org.hexworks.amethyst.api.Engine
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.amethyst.api.newEntityOfType
 import org.hexworks.amethyst.api.system.Behavior
+import org.hexworks.amethyst.internal.TurnBasedEngine
 import org.hexworks.cobalt.core.api.UUID
 import java.util.concurrent.Executors
 import kotlin.reflect.KClass
@@ -17,7 +18,8 @@ import kotlin.system.measureNanoTime
 @Suppress("BlockingMethodInNonBlockingContext")
 object EngineStressTest {
 
-    private val target = Engines.newEngine<TestContext>(Executors.newFixedThreadPool(1).asCoroutineDispatcher())
+    private val target: TurnBasedEngine<TestContext> =
+        Engine.create(Executors.newFixedThreadPool(1).asCoroutineDispatcher())
 
     @JvmStatic
     fun main(args: Array<String>) {
@@ -35,9 +37,9 @@ object EngineStressTest {
     }
 
     private suspend fun executeStressTestWith(
-            entityCount: Int,
-            repeats: Int,
-            entityBuilder: (Int) -> Entity<TestEntityType, TestContext>
+        entityCount: Int,
+        repeats: Int,
+        entityBuilder: (Int) -> Entity<TestEntityType, TestContext>
     ) {
         repeat(entityCount) {
             target.addEntity(entityBuilder(it))
@@ -46,7 +48,7 @@ object EngineStressTest {
         var timeSumMs = 0L
         repeat(repeats) {
             val nano = measureNanoTime {
-                target.update(TestContext).join()
+                target.executeTurn(TestContext).join()
             }
             counter++
             timeSumMs += nano / 1000 / 1000
@@ -61,18 +63,24 @@ object EngineStressTest {
 
     private fun createNoOpEntity(idx: Int): Entity<TestEntityType, TestContext> {
         return newEntityOfType(TestEntityType) {
-            attributes(TestAttribute(
+            attributes(
+                TestAttribute(
                     name = "name $idx",
-                    age = idx))
+                    age = idx
+                )
+            )
             facets(TestFacet)
         }
     }
 
     private fun createWaitingEntity(idx: Int, waitMs: Long): Entity<TestEntityType, TestContext> {
         return newEntityOfType(TestEntityType) {
-            attributes(TestAttribute(
+            attributes(
+                TestAttribute(
                     name = "name $idx",
-                    age = idx))
+                    age = idx
+                )
+            )
             facets(TestFacet)
             behaviors(WaitingBehavior(waitMs))
         }

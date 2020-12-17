@@ -52,7 +52,7 @@ class StateMachineSample {
 
     object Unlockable : BaseStateFacet<MyContext, BarrierAction.Unlock>(BarrierAction.Unlock::class) {
         override suspend fun onEnter(message: BarrierAction.Unlock) {
-            message.source.executeCommand(BarrierStateChange.Unlocked(
+            message.source.receiveMessage(BarrierStateChange.Unlocked(
                     context = message.context,
                     source = message.source
             ))
@@ -66,7 +66,7 @@ class StateMachineSample {
     object Openable : BaseStateFacet<MyContext, BarrierAction.Open>(BarrierAction.Open::class) {
 
         override suspend fun onEnter(message: BarrierAction.Open) {
-            message.source.executeCommand(BarrierStateChange.Opened(
+            message.source.receiveMessage(BarrierStateChange.Opened(
                     context = message.context,
                     source = message.source
             ))
@@ -80,7 +80,7 @@ class StateMachineSample {
     object Closeable : BaseStateFacet<MyContext, BarrierAction.Close>(BarrierAction.Close::class) {
 
         override suspend fun onEnter(message: BarrierAction.Close) {
-            message.source.executeCommand(BarrierStateChange.Closed(
+            message.source.receiveMessage(BarrierStateChange.Closed(
                     context = message.context,
                     source = message.source
             ))

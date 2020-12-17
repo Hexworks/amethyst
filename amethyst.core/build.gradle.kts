@@ -37,6 +37,7 @@ kotlin {
                 api(kotlinxCoroutines)
                 api(kotlinxCollectionsImmutable)
                 api(cobaltCore)
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.1.1")
             }
         }
         val commonTest by getting {

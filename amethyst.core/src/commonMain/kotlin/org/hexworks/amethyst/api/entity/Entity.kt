@@ -52,14 +52,14 @@ interface Entity<T : EntityType, C : Context> : AttributeAccessor, FacetAccessor
      * is updated next.
      * @return true if the [Message] can be processed by a [System] false if not.
      */
-    suspend fun sendCommand(message: Message<C>): Boolean
+    suspend fun sendMessage(message: Message<C>): Boolean
 
     /**
      * Makes this [Entity] immediately process this [Message].
      * @return the [Response] for the given [message]
      * @see [Response] for more info.
      */
-    suspend fun executeCommand(message: Message<C>): Response
+    suspend fun receiveMessage(message: Message<C>): Response
 
     /**
      * Updates this [Entity] using the given [context]. See [Context] for more info about what a [context]

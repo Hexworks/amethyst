@@ -153,7 +153,7 @@ class DefaultEntityTest {
 
         val command = TestMessage(target)
 
-        target.executeCommand(command)
+        target.receiveMessage(command)
 
         assertTrue("Facet did not receive command") {
             consumingFacet.wasGivenCommand(command)
@@ -170,7 +170,7 @@ class DefaultEntityTest {
 
         val command = TestMessage(target)
 
-        target.executeCommand(command)
+        target.receiveMessage(command)
 
         assertTrue("Facet received the command") {
             wannabeConsumingFacet.wasGivenCommand(command).not()

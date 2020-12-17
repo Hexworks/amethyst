@@ -33,15 +33,15 @@ class DefaultEntity<T : EntityType, C : Context>(
     override val needsUpdate: Boolean
         get() = hasBehaviors || eventStack.isNotEmpty()
 
-    override suspend fun sendCommand(message: Message<C>): Boolean {
-        logger.debug("Receiving command '$message' on entity '$this'.")
+    override suspend fun sendMessage(message: Message<C>): Boolean {
+        logger.debug("Sending message '$message' to entity '$this'.")
         eventStack.add(message)
         return false
     }
 
     @Suppress("UNCHECKED_CAST")
-    override suspend fun executeCommand(message: Message<C>): Response {
-        logger.debug("Executing entity command '$message' on entity $this.")
+    override suspend fun receiveMessage(message: Message<C>): Response {
+        logger.debug("Receiving message '$message' in entity $this.")
         return if (hasFacets) {
             val iter: Iterator<Facet<C, Message<C>>> = facets.iterator() as Iterator<Facet<C, Message<C>>>
             var response: Response = Pass
@@ -63,7 +63,7 @@ class DefaultEntity<T : EntityType, C : Context>(
         val events = eventStack.toList()
         eventStack.clear()
         events.forEach {
-            executeCommand(it)
+            receiveMessage(it)
         }
         return behaviors.fold(false) { result, behavior ->
             result or behavior.update(this, context)
