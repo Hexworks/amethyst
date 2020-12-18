@@ -19,25 +19,42 @@ tasks.dokkaHtmlMultiModule.configure {
     outputDirectory.set(projectDir.resolve("docs").resolve(project.version.toString()))
 }
 
-tasks.dokkaHtmlMultiModule {
-    doLast {
-        println("---=== Generating index.html for docs ===---")
-        val docs = File("docs")
-        val html = StringBuilder()
-        html.append("<html><head><title>Choose a Version</title></head><body>")
-        html.append("<h1>Pick a Version</h1><ul>")
-        docs.listFiles()
-                ?.filter { it.name.contains("index.html").not() }
+tasks {
+
+    val docsDir = projectDir.resolve("docs")
+
+    val renameModulesToIndex by registering {
+        doLast {
+            logger.lifecycle("---=== Renaming -modules.html to index.html ===---")
+            docsDir.listFiles()
                 ?.filter { it.isDirectory }
                 ?.forEach { dir ->
-                    html.append("<li><a href=\"${dir.name}\">${dir.name}</a></li>")
+                    dir.listFiles()
+                        ?.find { file -> file.name == "-modules.html" }
+                        ?.renameTo(File(dir, "index.html"))
                 }
-        html.append("</ul></body></html>")
-        File("docs/index.html").apply {
-            if (exists()) {
-                delete()
-            }
-            writeText(html.toString())
         }
+    }
+
+    val generateDocsIndexTask by registering {
+        doLast {
+            logger.lifecycle("---=== Generating index.html for docs ===---")
+
+            val docsSubDirs = docsDir.listFiles()
+                ?.filter { it.isDirectory }
+                ?.joinToString("\n") { dir -> "<li><a href=\"${dir.name}\">${dir.name}</a></li>" }
+
+            val html = """|<!doctype html><head><title>Choose a Version</title></head><body>
+                |<h1>Pick a Version</h1><ul>
+                |$docsSubDirs
+                |</ul></body></html>""".trimMargin()
+
+            docsDir.resolve("index.html").writeText(html)
+        }
+    }
+
+    dokkaHtmlMultiModule {
+        outputDirectory.set(docsDir.resolve(project.version.toString()))
+        finalizedBy(renameModulesToIndex, generateDocsIndexTask)
     }
 }

@@ -56,6 +56,7 @@ $dokka.location:/ProcessorContext/currentTime/#/PointingToDeclaration/[root]/-p
 $dokka.location:/ProcessorContext/entities/#/PointingToDeclaration/[root]/-processor-context/entities.html
 org.hexworks.amethyst.api
 org.hexworks.amethyst.api.accessor
+org.hexworks.amethyst.api.attribute
 org.hexworks.amethyst.api.base
 org.hexworks.amethyst.api.builder
 org.hexworks.amethyst.api.entity
