@@ -19,34 +19,34 @@ class StateMachineSample {
     sealed class BarrierAction : Message<MyContext> {
         data class Unlock(
                 override val context: MyContext,
-                override val source: Entity<out EntityType, MyContext>
+                override val source: Entity<EntityType, MyContext>
         ) : BarrierAction()
 
         data class Open(
                 override val context: MyContext,
-                override val source: Entity<out EntityType, MyContext>
+                override val source: Entity<EntityType, MyContext>
         ) : BarrierAction()
 
         data class Close(
                 override val context: MyContext,
-                override val source: Entity<out EntityType, MyContext>
+                override val source: Entity<EntityType, MyContext>
         ) : BarrierAction()
     }
 
     sealed class BarrierStateChange : Message<MyContext> {
         data class Unlocked(
                 override val context: MyContext,
-                override val source: Entity<out EntityType, MyContext>
+                override val source: Entity<EntityType, MyContext>
         ) : BarrierStateChange()
 
         data class Opened(
                 override val context: MyContext,
-                override val source: Entity<out EntityType, MyContext>
+                override val source: Entity<EntityType, MyContext>
         ) : BarrierStateChange()
 
         data class Closed(
                 override val context: MyContext,
-                override val source: Entity<out EntityType, MyContext>
+                override val source: Entity<EntityType, MyContext>
         ) : BarrierStateChange()
     }
 

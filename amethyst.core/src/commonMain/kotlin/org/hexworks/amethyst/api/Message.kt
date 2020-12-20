@@ -21,7 +21,7 @@ interface Message<C : Context> {
      * The [Entity] that sent this [Message].
      * // TODO: shouldn't this be `self` or something similar?
      */
-    val source: Entity<out EntityType, C>
+    val source: Entity<EntityType, C>
 
 }
 

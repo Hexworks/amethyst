@@ -16,7 +16,7 @@ interface Behavior<C : Context> : System<C> {
      * Updates the given [entity] using the given [context].
      * @return `true` if this [Behavior] was performed successfully,`false` otherwise.
      */
-    suspend fun update(entity: Entity<out EntityType, C>, context: C): Boolean
+    suspend fun update(entity: Entity<EntityType, C>, context: C): Boolean
 
     /**
      * Performs an or combination of this [Behavior] and the [other] [Behavior]:

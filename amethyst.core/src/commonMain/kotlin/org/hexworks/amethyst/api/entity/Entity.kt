@@ -16,7 +16,7 @@ import org.hexworks.cobalt.core.api.UUID
  * For example a Goblin entity can be composed of `CombatHandler`, `ArmorUser` and `HunterSeeker`
  * [System]s with a `Creature` [Attribute] to represent how a Goblin works.
  */
-interface Entity<T : EntityType, C : Context> : AttributeAccessor, FacetAccessor<C>, BehaviorAccessor<C> {
+interface Entity<out T : EntityType, C : Context> : AttributeAccessor, FacetAccessor<C>, BehaviorAccessor<C> {
 
     /**
      * The unique [UUID] of this [Entity].
@@ -71,5 +71,5 @@ interface Entity<T : EntityType, C : Context> : AttributeAccessor, FacetAccessor
     /**
      * Returns a mutable version of this [Entity]. The underlying [Entity] will be the same object.
      */
-    fun asMutableEntity(): MutableEntity<T, C>
+    fun asMutableEntity(): MutableEntity<out T, C>
 }

@@ -16,12 +16,12 @@ interface Engine<T : Context> {
     /**
      * Adds the given [Entity] to this [Engine].
      */
-    fun addEntity(entity: Entity<out EntityType, T>)
+    fun addEntity(entity: Entity<EntityType, T>)
 
     /**
      * Removes the given [Entity] from this [Engine].
      */
-    fun removeEntity(entity: Entity<out EntityType, T>)
+    fun removeEntity(entity: Entity<EntityType, T>)
 
     /**
      * Updates the [Entity] objects in this [Engine] with the given [context].

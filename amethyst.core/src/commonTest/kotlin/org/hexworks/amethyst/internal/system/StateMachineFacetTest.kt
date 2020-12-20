@@ -87,6 +87,6 @@ class StateMachineFacetTest {
 
     data class BadMessage(
             override val context: MyContext,
-            override val source: Entity<out EntityType, MyContext>
+            override val source: Entity<EntityType, MyContext>
     ) : Message<MyContext>
 }

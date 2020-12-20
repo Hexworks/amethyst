@@ -26,12 +26,12 @@ class RealTimeEngine<T : Context>(
     }
 
     @Synchronized
-    override fun addEntity(entity: Entity<out EntityType, T>) {
-        entities.add(entity as Entity<EntityType, T>)
+    override fun addEntity(entity: Entity<EntityType, T>) {
+        entities.add(entity)
     }
 
     @Synchronized
-    override fun removeEntity(entity: Entity<out EntityType, T>) {
+    override fun removeEntity(entity: Entity<EntityType, T>) {
         entities.remove(entity)
     }
 

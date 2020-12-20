@@ -11,7 +11,7 @@ class CompositeOrBehavior<C : Context>(private val first: Behavior<C>, private v
 
     private val logger = LoggerFactory.getLogger(this::class)
 
-    override suspend fun update(entity: Entity<out EntityType, C>, context: C): Boolean {
+    override suspend fun update(entity: Entity<EntityType, C>, context: C): Boolean {
         val firstResult = first.update(entity, context)
         if (firstResult) {
             logger.debug {

@@ -66,7 +66,7 @@ class EntityBuilderTest {
     object MandatoryAttribute : BaseAttribute()
 
     object BehaviorWithMandatoryAttribute : BaseBehavior<TestContext>(MandatoryAttribute::class) {
-        override suspend fun update(entity: Entity<out EntityType, TestContext>, context: TestContext): Boolean {
+        override suspend fun update(entity: Entity<EntityType, TestContext>, context: TestContext): Boolean {
             TODO("not implemented")
         }
     }

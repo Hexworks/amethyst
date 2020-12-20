@@ -70,6 +70,35 @@ What's important is that `Attribute`s should **never have** behavior, they are s
 On the other hand, `System`s should never have internal state. These two *important rules* allow us to compose `System`s
 and `Attribute`s into `Entity` objects that are flexible, cohesive and safe to use.
 
+The `Entity` itself is just a bag of `Attribute`s and `System`s:
+
+```kotlin
+interface Entity<T : EntityType, C : Context> : AttributeAccessor, FacetAccessor<C>, BehaviorAccessor<C> {
+    
+    val id: UUID
+    val type: T
+    val name: String
+    val description: String
+
+    val attributes: Sequence<Attribute>
+    val behaviors: Sequence<Behavior<C>>
+    val facets: Sequence<FacetWithContext<C>>
+
+    suspend fun sendMessage(message: Message<C>): Boolean
+
+    suspend fun receiveMessage(message: Message<C>): Response
+
+    suspend fun update(context: C): Boolean
+}
+```
+
+What's interesting here is `sendMessage`, `receiveMessage` and `update`. It is not a coincidence that we have these in
+`Facet` and `Behavior`! When an `Entity` receives a `Message` it will try to apply it to its `Facet`s, and when an `Entity`
+is updated it lets its `Behavior`s interact with the world. What *world* means in this context is up to you, that's why
+`update` takes a `context` object which can be anything. In our case it will contain our `World` for example.
+
+Don't worry if this seems a bit complex, we'll see soon that the benefits of using such system outweigh the costs.
+
 So how do these entities work together? We have `Engine` for that which handles them, so we don't have to do it by hand:
 
 ```kotlin

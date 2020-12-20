@@ -212,13 +212,13 @@ class DefaultEntityTest {
 
         private val updatedWith = mutableListOf<Pair<Entity<EntityType, TestContext>, TestContext>>()
 
-        fun wasUpdatedWith(entity: Entity<out EntityType, TestContext>, context: TestContext): Boolean {
+        fun wasUpdatedWith(entity: Entity<EntityType, TestContext>, context: TestContext): Boolean {
             return updatedWith.contains(entity to context)
         }
 
         @Suppress("UNCHECKED_CAST")
-        override suspend fun update(entity: Entity<out EntityType, TestContext>, context: TestContext): Boolean {
-            updatedWith.add(entity as Entity<EntityType, TestContext> to context)
+        override suspend fun update(entity: Entity<EntityType, TestContext>, context: TestContext): Boolean {
+            updatedWith.add(entity to context)
             return updateResult
         }
     }
