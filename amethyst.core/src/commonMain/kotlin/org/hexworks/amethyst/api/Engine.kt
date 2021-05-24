@@ -1,11 +1,10 @@
 package org.hexworks.amethyst.api
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.amethyst.internal.TurnBasedEngine
-import kotlin.coroutines.CoroutineContext
+import org.hexworks.amethyst.platform.Dispatchers
 
 /**
  * An [Engine] contains an aggregation of [Entity] objects and it is also responsible for updating them.
@@ -34,8 +33,6 @@ interface Engine<T : Context> {
          * Creates a new [TurnBasedEngine] that has a [TurnBasedEngine.executeTurn] function
          * for executing the next turn. [start] will execute the first turn.
          */
-        fun <T : Context> create(
-            coroutineContext: CoroutineContext = Dispatchers.Default
-        ): TurnBasedEngine<T> = TurnBasedEngine(coroutineContext)
+        fun <T : Context> create(): TurnBasedEngine<T> = TurnBasedEngine(Dispatchers.Single)
     }
 }

@@ -25,6 +25,7 @@ class TurnBasedEngine<T : Context>(
         }
     }
 
+    @Synchronized
     override fun start(context: T): Job {
         return executeTurn(context)
     }
