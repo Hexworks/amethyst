@@ -1,6 +1,5 @@
 package stress
 
-import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.runBlocking
 import org.hexworks.amethyst.api.Attribute
 import org.hexworks.amethyst.api.Context
@@ -11,7 +10,6 @@ import org.hexworks.amethyst.api.newEntityOfType
 import org.hexworks.amethyst.api.system.Behavior
 import org.hexworks.amethyst.internal.TurnBasedEngine
 import org.hexworks.cobalt.core.api.UUID
-import java.util.concurrent.Executors
 import kotlin.reflect.KClass
 import kotlin.system.measureNanoTime
 
@@ -19,7 +17,7 @@ import kotlin.system.measureNanoTime
 object EngineStressTest {
 
     private val target: TurnBasedEngine<TestContext> =
-        Engine.create(Executors.newFixedThreadPool(1).asCoroutineDispatcher())
+        Engine.create()
 
     @JvmStatic
     fun main(args: Array<String>) {
