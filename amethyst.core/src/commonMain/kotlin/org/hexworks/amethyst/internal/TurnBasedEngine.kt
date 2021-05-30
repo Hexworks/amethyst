@@ -19,19 +19,13 @@ class TurnBasedEngine<T : Context>(
 ) : Engine<T>, CoroutineScope {
 
     private val entities = mutableListOf<Entity<EntityType, T>>()
-    private var currentJob: Job = launch {
-
-    }
 
     @Synchronized
     fun executeTurn(context: T): Job {
         return launch {
-            currentJob.join()
             entities.filter { it.needsUpdate }.map {
                 async { it.update(context) }
             }.awaitAll()
-        }.apply {
-            currentJob = this
         }
     }
 
