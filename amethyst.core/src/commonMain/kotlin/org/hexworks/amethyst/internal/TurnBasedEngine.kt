@@ -2,7 +2,11 @@
 
 package org.hexworks.amethyst.internal
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
 import org.hexworks.amethyst.api.Context
 import org.hexworks.amethyst.api.Engine
 import org.hexworks.amethyst.api.entity.Entity
@@ -15,13 +19,19 @@ class TurnBasedEngine<T : Context>(
 ) : Engine<T>, CoroutineScope {
 
     private val entities = mutableListOf<Entity<EntityType, T>>()
+    private var currentJob: Job = launch {
+
+    }
 
     @Synchronized
     fun executeTurn(context: T): Job {
         return launch {
+            currentJob.join()
             entities.filter { it.needsUpdate }.map {
                 async { it.update(context) }
             }.awaitAll()
+        }.apply {
+            currentJob = this
         }
     }
 
