@@ -4,7 +4,6 @@ import org.hexworks.amethyst.api.Attribute
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.mutator.AttributeMutator
 import org.hexworks.amethyst.internal.accessor.DefaultAttributeMutator
-import org.hexworks.cobalt.datatypes.Maybe
 import kotlin.jvm.JvmStatic
 import kotlin.reflect.KClass
 
@@ -21,9 +20,11 @@ interface AttributeAccessor {
     val hasAttributes: Boolean
 
     /**
-     * Returns the [Attribute] of the given class [T] (if any).
+     * Returns the [Attribute] of the given class [T] or throws an exception if the
+     * attribute cannot be found.
      */
-    fun <T : Attribute> findAttribute(klass: KClass<T>) = Maybe.ofNullable(findAttributeOrNull(klass))
+    fun <T : Attribute> findAttribute(klass: KClass<T>) =
+        findAttributeOrNull(klass) ?: error("Cannot find attribute using class: $klass")
 
     /**
      * Returns the [Attribute] of the given class [T] (if any).

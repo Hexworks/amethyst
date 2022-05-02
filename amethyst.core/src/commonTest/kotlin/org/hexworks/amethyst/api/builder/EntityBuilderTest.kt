@@ -1,12 +1,15 @@
 package org.hexworks.amethyst.api.builder
 
-import org.hexworks.amethyst.api.*
+import org.hexworks.amethyst.api.Context
+import org.hexworks.amethyst.api.Message
+import org.hexworks.amethyst.api.Response
 import org.hexworks.amethyst.api.base.BaseAttribute
 import org.hexworks.amethyst.api.base.BaseBehavior
 import org.hexworks.amethyst.api.base.BaseEntityType
 import org.hexworks.amethyst.api.base.BaseFacet
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
+import org.hexworks.amethyst.api.newEntityOfType
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
@@ -17,7 +20,8 @@ class EntityBuilderTest {
     fun given_an_entity_with_mandatory_attribute_for_facet_when_building_it_without_one_it_should_fail() {
 
         assertFailsWith<IllegalArgumentException>(
-                message = "Can't create Entity because there are missing attributes: MandatoryAttribute.") {
+            message = "Can't create Entity because there are missing attributes: MandatoryAttribute."
+        ) {
             newEntityOfType<TestType, TestContext>(TestType) {
                 facets(FacetWithMandatoryAttribute)
             }
@@ -28,7 +32,8 @@ class EntityBuilderTest {
     fun given_an_entity_with_mandatory_attribute_for_behavior_when_building_it_without_one_it_should_fail() {
 
         assertFailsWith<IllegalArgumentException>(
-                message = "Can't create Entity because there are missing attributes: MandatoryAttribute.") {
+            message = "Can't create Entity because there are missing attributes: MandatoryAttribute."
+        ) {
             newEntityOfType<TestType, TestContext>(TestType) {
                 behaviors(BehaviorWithMandatoryAttribute)
             }
@@ -44,8 +49,8 @@ class EntityBuilderTest {
         }
 
         assertTrue {
-            result.findFacet(FacetWithMandatoryAttribute::class).isPresent and
-                    result.findAttribute(MandatoryAttribute::class).isPresent
+            result.findFacetOrNull(FacetWithMandatoryAttribute::class) != null &&
+                    result.findAttributeOrNull(MandatoryAttribute::class) != null
         }
     }
 
@@ -58,8 +63,8 @@ class EntityBuilderTest {
         }
 
         assertTrue {
-            result.findBehavior(BehaviorWithMandatoryAttribute::class).isPresent and
-                    result.findAttribute(MandatoryAttribute::class).isPresent
+            result.findBehaviorOrNull(BehaviorWithMandatoryAttribute::class) != null &&
+                    result.findAttributeOrNull(MandatoryAttribute::class) != null
         }
     }
 
@@ -71,7 +76,8 @@ class EntityBuilderTest {
         }
     }
 
-    object FacetWithMandatoryAttribute : BaseFacet<TestContext, TestMessage>(TestMessage::class, MandatoryAttribute::class) {
+    object FacetWithMandatoryAttribute :
+        BaseFacet<TestContext, TestMessage>(TestMessage::class, MandatoryAttribute::class) {
         override suspend fun receive(message: TestMessage): Response {
             TODO("Not yet implemented")
         }

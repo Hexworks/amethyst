@@ -7,7 +7,7 @@ import org.hexworks.amethyst.api.base.BaseEntityType
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.amethyst.api.newEntityOfType
-import org.hexworks.cobalt.core.platform.runTest
+import org.hexworks.amethyst.platform.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -25,8 +25,9 @@ class TurnBasedEngineTest {
     fun given_multiple_entities_all_should_be_updated_when_the_engine_is_updated() = runTest {
 
         val updates: MutableMap<Int, Boolean> = mutableMapOf(
-                0 to false,
-                1 to false)
+            0 to false,
+            1 to false
+        )
 
         target.addEntity(newEntityOfType(Type0) {
             behaviors(object : BaseBehavior<TestContext>() {

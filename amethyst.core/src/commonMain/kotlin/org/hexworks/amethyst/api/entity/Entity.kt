@@ -1,13 +1,13 @@
 package org.hexworks.amethyst.api.entity
 
 import org.hexworks.amethyst.api.Attribute
-import org.hexworks.amethyst.api.Message
 import org.hexworks.amethyst.api.Context
+import org.hexworks.amethyst.api.Message
 import org.hexworks.amethyst.api.Response
-import org.hexworks.amethyst.api.system.Behavior
 import org.hexworks.amethyst.api.accessor.AttributeAccessor
 import org.hexworks.amethyst.api.accessor.BehaviorAccessor
 import org.hexworks.amethyst.api.accessor.FacetAccessor
+import org.hexworks.amethyst.api.system.Behavior
 import org.hexworks.amethyst.api.system.System
 import org.hexworks.cobalt.core.api.UUID
 

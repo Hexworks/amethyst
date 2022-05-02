@@ -1,18 +1,22 @@
 @file:Suppress("UnstableApiUsage")
 
-import Libs.cobaltCore
-import Libs.kotlinxCollectionsImmutable
-import Libs.kotlinxCoroutines
-import TestLibs.kotlinTestAnnotationsCommon
-import TestLibs.kotlinTestCommon
+import Libraries.kotlinReflect
+import Libraries.kotlinTestAnnotationsCommon
+import Libraries.kotlinTestCommon
+import Libraries.kotlinTestJs
+import Libraries.kotlinTestJunit
+import Libraries.kotlinxCollectionsImmutable
+import Libraries.kotlinxCoroutines
+import Libraries.cobaltCore
+
 import org.jetbrains.dokka.gradle.DokkaTask
 import java.net.URL
 
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.dokka")
     id("maven-publish")
     id("signing")
+    id("org.jetbrains.dokka")
 }
 
 
@@ -20,52 +24,70 @@ kotlin {
 
     jvm {
         withJava()
-        jvmTarget(JavaVersion.VERSION_1_8)
-    }
-
-    js {
-        browser {
-            testTask { enabled = false }
+        compilations.all {
+            kotlinOptions {
+                apiVersion = "1.5"
+                languageVersion = "1.5"
+            }
         }
     }
 
+    js(BOTH) {
+        browser {
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                }
+            }
+        }
+        nodejs()
+    }
+
     sourceSets {
-        commonMain {
+
+        val commonMain by getting {
             dependencies {
-                api(kotlin("reflect"))
                 api(kotlinxCoroutines)
+                api(kotlinReflect)
                 api(kotlinxCollectionsImmutable)
+
                 api(cobaltCore)
                 api("org.jetbrains.kotlinx:kotlinx-datetime:0.1.1")
             }
         }
+
         val commonTest by getting {
             dependencies {
                 implementation(kotlinTestCommon)
                 implementation(kotlinTestAnnotationsCommon)
             }
         }
-        val jvmMain by getting {
-            dependencies {
-            }
-        }
+        val jvmMain by getting {}
         val jvmTest by getting {
             dependencies {
-                implementation(kotlin("test"))
-                implementation(kotlin("test-junit"))
+                implementation(kotlinTestJunit)
             }
         }
-        val jsMain by getting {
-            dependencies {
-            }
-        }
+        val jsMain by getting {}
         val jsTest by getting {
             dependencies {
-                implementation(kotlin("test"))
-                implementation(kotlin("test-js"))
+                implementation(kotlinTestJs)
             }
         }
     }
+}
+
+publishing {
+    publishWith(
+        project = project,
+        module = "amethyst.core",
+        desc = "Core component of Amethyst."
+    )
+}
+
+signing {
+    isRequired = false
+    sign(publishing.publications)
 }
 
 tasks {
@@ -88,17 +110,4 @@ tasks {
             }
         }
     }
-}
-
-publishing {
-    publishWith(
-            project = project,
-            module = "amethyst.core",
-            desc = "Core component of Amethyst."
-    )
-}
-
-signing {
-    isRequired = false
-    sign(publishing.publications)
 }

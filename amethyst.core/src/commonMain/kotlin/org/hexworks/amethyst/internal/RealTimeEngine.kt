@@ -5,9 +5,6 @@ package org.hexworks.amethyst.internal
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.launch
 import org.hexworks.amethyst.api.Context
 import org.hexworks.amethyst.api.Engine
 import org.hexworks.amethyst.api.entity.Entity
@@ -16,7 +13,7 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.jvm.Synchronized
 
 class RealTimeEngine<T : Context>(
-        override val coroutineContext: CoroutineContext = Dispatchers.Default
+    override val coroutineContext: CoroutineContext = Dispatchers.Default
 ) : Engine<T>, CoroutineScope {
 
     private val entities = mutableListOf<Entity<EntityType, T>>()

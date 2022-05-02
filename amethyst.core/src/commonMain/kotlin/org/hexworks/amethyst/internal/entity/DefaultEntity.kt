@@ -1,10 +1,10 @@
 package org.hexworks.amethyst.internal.entity
 
 import org.hexworks.amethyst.api.Attribute
-import org.hexworks.amethyst.api.Message
-import org.hexworks.amethyst.api.MessageResponse
 import org.hexworks.amethyst.api.Consumed
 import org.hexworks.amethyst.api.Context
+import org.hexworks.amethyst.api.Message
+import org.hexworks.amethyst.api.MessageResponse
 import org.hexworks.amethyst.api.Pass
 import org.hexworks.amethyst.api.Response
 import org.hexworks.amethyst.api.base.BaseEntity
@@ -16,15 +16,15 @@ import org.hexworks.amethyst.api.system.Facet
 import org.hexworks.cobalt.logging.api.LoggerFactory
 
 class DefaultEntity<T : EntityType, C : Context>(
-        type: T,
-        attributes: Set<Attribute> = setOf(),
-        facets: Set<FacetWithContext<C>> = setOf(),
-        behaviors: Set<Behavior<C>> = setOf()
+    type: T,
+    attributes: Set<Attribute> = setOf(),
+    facets: Set<FacetWithContext<C>> = setOf(),
+    behaviors: Set<Behavior<C>> = setOf()
 ) : BaseEntity<T, C>(
-        type = type,
-        attributes = attributes.plus(type),
-        facets = facets,
-        behaviors = behaviors
+    type = type,
+    attributes = attributes.plus(type),
+    facets = facets,
+    behaviors = behaviors
 ) {
 
     private val eventStack = mutableListOf<Message<C>>()

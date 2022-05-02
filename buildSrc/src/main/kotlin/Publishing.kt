@@ -10,9 +10,9 @@ import org.gradle.kotlin.dsl.registering
 import org.gradle.kotlin.dsl.withType
 
 fun PublishingExtension.publishWith(
-        project: Project,
-        module: String,
-        desc: String
+    project: Project,
+    module: String,
+    desc: String
 ) {
 
     with(project) {
@@ -72,11 +72,13 @@ fun PublishingExtension.publishWith(
 
         repositories {
 
+            val releaseUrl = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+            val snapshotUrl = uri("https://oss.sonatype.org/content/repositories/snapshots")
             val sonatypeUsername = System.getenv("SONATYPE_USERNAME") ?: ""
             val sonatypePassword = System.getenv("SONATYPE_PASSWORD") ?: ""
 
             maven {
-                url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+                url = if (version.toString().endsWith("SNAPSHOT")) snapshotUrl else releaseUrl
                 credentials {
                     username = if (sonatypeUsername.isBlank()) "" else sonatypeUsername
                     password = if (sonatypePassword.isBlank()) "" else sonatypePassword

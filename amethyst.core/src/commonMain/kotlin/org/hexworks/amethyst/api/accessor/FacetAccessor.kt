@@ -6,7 +6,6 @@ import org.hexworks.amethyst.api.extensions.FacetWithContext
 import org.hexworks.amethyst.api.mutator.FacetMutator
 import org.hexworks.amethyst.api.system.Facet
 import org.hexworks.amethyst.internal.accessor.DefaultFacetMutator
-import org.hexworks.cobalt.datatypes.Maybe
 import kotlin.jvm.JvmStatic
 import kotlin.reflect.KClass
 
@@ -24,9 +23,11 @@ interface FacetAccessor<C : Context> {
     val hasFacets: Boolean
 
     /**
-     * Returns the [Facet] of the given class [T] (if any).
+     * Returns the [Facet] of the given class [T] or throws an exception if the
+     * facet cannot be found.
      */
-    fun <T : FacetWithContext<C>> findFacet(klass: KClass<T>) = Maybe.ofNullable(findFacetOrNull(klass))
+    fun <T : FacetWithContext<C>> findFacet(klass: KClass<T>) =
+        findFacetOrNull(klass) ?: error("Cannot find facet using class: $klass")
 
     /**
      * Returns the [Facet] of the given class [T] (if any).

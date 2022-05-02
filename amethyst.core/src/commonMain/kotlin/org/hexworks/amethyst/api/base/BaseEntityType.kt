@@ -7,9 +7,9 @@ import org.hexworks.cobalt.core.api.UUID
  * Base class which can be used for [EntityType]s.
  */
 abstract class BaseEntityType(
-        override val name: String = "unknown",
-        override val description: String = "",
-        override val id: UUID = UUID.randomUUID()
+    override val name: String = "unknown",
+    override val description: String = "",
+    override val id: UUID = UUID.randomUUID()
 ) : EntityType {
     final override fun equals(other: Any?): Boolean {
         if (this === other) return true

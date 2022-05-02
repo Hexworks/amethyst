@@ -50,17 +50,17 @@ class EntityBuilder<T : EntityType, C : Context>(private val type: T) {
         val finalBehaviors = behaviors.toSet()
         val finalFacets = facets.toSet()
         val missingAttributes = finalFacets.flatMap { it.mandatoryAttributes }
-                .plus(finalBehaviors.flatMap { it.mandatoryAttributes })
-                .toSet()
-                .subtract(this.attributes.map { it::class })
+            .plus(finalBehaviors.flatMap { it.mandatoryAttributes })
+            .toSet()
+            .subtract(this.attributes.map { it::class }.toSet())
         require(missingAttributes.isEmpty()) {
             "Can't create Entity because there are missing attributes: ${missingAttributes.joinToString { it.simpleName!! }}."
         }
         return DefaultEntity(
-                type = type,
-                attributes = finalAttributes,
-                facets = finalFacets,
-                behaviors = finalBehaviors
+            type = type,
+            attributes = finalAttributes,
+            facets = finalFacets,
+            behaviors = finalBehaviors
         )
     }
 

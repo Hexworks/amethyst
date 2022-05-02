@@ -7,7 +7,8 @@ import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.amethyst.api.system.Behavior
 import org.hexworks.cobalt.logging.api.LoggerFactory
 
-class CompositeOrBehavior<C : Context>(private val first: Behavior<C>, private val second: Behavior<C>) : BaseBehavior<C>() {
+class CompositeOrBehavior<C : Context>(private val first: Behavior<C>, private val second: Behavior<C>) :
+    BaseBehavior<C>() {
 
     private val logger = LoggerFactory.getLogger(this::class)
 

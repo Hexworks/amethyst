@@ -1,13 +1,18 @@
 package org.hexworks.amethyst.internal.entity
 
-import org.hexworks.amethyst.api.*
+import org.hexworks.amethyst.api.Consumed
+import org.hexworks.amethyst.api.Context
+import org.hexworks.amethyst.api.Message
+import org.hexworks.amethyst.api.Pass
+import org.hexworks.amethyst.api.Response
 import org.hexworks.amethyst.api.base.BaseAttribute
 import org.hexworks.amethyst.api.base.BaseBehavior
 import org.hexworks.amethyst.api.base.BaseEntityType
 import org.hexworks.amethyst.api.base.BaseFacet
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
-import org.hexworks.cobalt.core.platform.runTest
+import org.hexworks.amethyst.api.newEntityOfType
+import org.hexworks.amethyst.platform.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -29,27 +34,32 @@ class DefaultEntityTest {
     @Test
     fun given_an_entity_it_should_have_its_initial_attributes() {
         assertEquals(
-                expected = setOf(InitialAttribute, TestType),
-                actual = target.attributes.toSet(),
-                message = "Target doesn't have the expected initial attribute")
-        assertEquals(expected = 2,
-                actual = target.attributes.toList().size)
+            expected = setOf(InitialAttribute, TestType),
+            actual = target.attributes.toSet(),
+            message = "Target doesn't have the expected initial attribute"
+        )
+        assertEquals(
+            expected = 2,
+            actual = target.attributes.toList().size
+        )
     }
 
     @Test
     fun given_an_entity_it_should_have_its_initial_behavior() {
         assertEquals(
-                expected = setOf(InitialBehavior),
-                actual = target.behaviors.toSet(),
-                message = "Target doesn't have the expected initial behavior")
+            expected = setOf(InitialBehavior),
+            actual = target.behaviors.toSet(),
+            message = "Target doesn't have the expected initial behavior"
+        )
     }
 
     @Test
     fun given_an_entity_it_should_have_its_initial_facet() {
         assertEquals(
-                expected = setOf(InitialFacet),
-                actual = target.facets.toSet(),
-                message = "Target doesn't have the expected initial facet")
+            expected = setOf(InitialFacet),
+            actual = target.facets.toSet(),
+            message = "Target doesn't have the expected initial facet"
+        )
     }
 
     @Test
@@ -57,11 +67,14 @@ class DefaultEntityTest {
         target.asMutableEntity().addAttribute(AddedAttribute)
 
         assertEquals(
-                expected = setOf(InitialAttribute, TestType, AddedAttribute),
-                actual = target.attributes.toSet(),
-                message = "Target doesn't have the expected attributes")
-        assertEquals(expected = 3,
-                actual = target.attributes.toList().size)
+            expected = setOf(InitialAttribute, TestType, AddedAttribute),
+            actual = target.attributes.toSet(),
+            message = "Target doesn't have the expected attributes"
+        )
+        assertEquals(
+            expected = 3,
+            actual = target.attributes.toList().size
+        )
     }
 
     @Test
@@ -69,9 +82,10 @@ class DefaultEntityTest {
         target.asMutableEntity().addBehavior(AddedBehavior)
 
         assertEquals(
-                expected = setOf(InitialBehavior, AddedBehavior),
-                actual = target.behaviors.toSet(),
-                message = "Target doesn't have the expected added behavior")
+            expected = setOf(InitialBehavior, AddedBehavior),
+            actual = target.behaviors.toSet(),
+            message = "Target doesn't have the expected added behavior"
+        )
     }
 
     @Test
@@ -79,9 +93,10 @@ class DefaultEntityTest {
         target.asMutableEntity().addFacet(AddedFacet)
 
         assertEquals(
-                expected = setOf(InitialFacet, AddedFacet),
-                actual = target.facets.toSet(),
-                message = "Target doesn't have the expected added facet")
+            expected = setOf(InitialFacet, AddedFacet),
+            actual = target.facets.toSet(),
+            message = "Target doesn't have the expected added facet"
+        )
     }
 
     @Test
@@ -90,11 +105,14 @@ class DefaultEntityTest {
         target.asMutableEntity().removeAttribute(AddedAttribute)
 
         assertEquals(
-                expected = setOf(InitialAttribute, TestType),
-                actual = target.attributes.toSet(),
-                message = "Target still has the removed attribute")
-        assertEquals(expected = 2,
-                actual = target.attributes.toList().size)
+            expected = setOf(InitialAttribute, TestType),
+            actual = target.attributes.toSet(),
+            message = "Target still has the removed attribute"
+        )
+        assertEquals(
+            expected = 2,
+            actual = target.attributes.toList().size
+        )
     }
 
     @Test
@@ -103,9 +121,10 @@ class DefaultEntityTest {
         target.asMutableEntity().removeBehavior(AddedBehavior)
 
         assertEquals(
-                expected = setOf(InitialBehavior),
-                actual = target.behaviors.toSet(),
-                message = "Target still has the added behavior")
+            expected = setOf(InitialBehavior),
+            actual = target.behaviors.toSet(),
+            message = "Target still has the added behavior"
+        )
     }
 
     @Test
@@ -114,9 +133,10 @@ class DefaultEntityTest {
         target.asMutableEntity().removeFacet(AddedFacet)
 
         assertEquals(
-                expected = setOf(InitialFacet),
-                actual = target.facets.toSet(),
-                message = "Target still has the added facet")
+            expected = setOf(InitialFacet),
+            actual = target.facets.toSet(),
+            message = "Target still has the added facet"
+        )
     }
 
     @Test
@@ -133,49 +153,52 @@ class DefaultEntityTest {
     }
 
     @Test
-    fun given_an_entity_with_a_behavior_which_updates_it_should_report_being_updated_when_a_command_is_sent() = runTest {
-        val updatingBehavior = UpdatingBehavior()
+    fun given_an_entity_with_a_behavior_which_updates_it_should_report_being_updated_when_a_command_is_sent() =
+        runTest {
+            val updatingBehavior = UpdatingBehavior()
 
-        target.asMutableEntity().addBehavior(updatingBehavior)
+            target.asMutableEntity().addBehavior(updatingBehavior)
 
-        val result = target.update(TestContext)
+            val result = target.update(TestContext)
 
-        assertTrue("Entity was not updated") {
-            result
+            assertTrue("Entity was not updated") {
+                result
+            }
         }
-    }
 
     @Test
-    fun given_an_entity_with_a_facet_which_consumes_commands_it_should_consume_the_command_when_a_command_is_sent() = runTest {
-        val consumingFacet = ConsumingFacet()
+    fun given_an_entity_with_a_facet_which_consumes_commands_it_should_consume_the_command_when_a_command_is_sent() =
+        runTest {
+            val consumingFacet = ConsumingFacet()
 
-        target.asMutableEntity().addFacet(consumingFacet)
+            target.asMutableEntity().addFacet(consumingFacet)
 
-        val command = TestMessage(target)
+            val command = TestMessage(target)
 
-        target.receiveMessage(command)
+            target.receiveMessage(command)
 
-        assertTrue("Facet did not receive command") {
-            consumingFacet.wasGivenCommand(command)
+            assertTrue("Facet did not receive command") {
+                consumingFacet.wasGivenCommand(command)
+            }
         }
-    }
 
     @Test
-    fun given_an_entity_with_a_facet_which_consumes_commands_it_shouldnt_when_another_facet_already_consumed_the_command() = runTest {
-        val consumingFacet = ConsumingFacet()
-        val wannabeConsumingFacet = WannabeConsumingFacet()
+    fun given_an_entity_with_a_facet_which_consumes_commands_it_shouldnt_when_another_facet_already_consumed_the_command() =
+        runTest {
+            val consumingFacet = ConsumingFacet()
+            val wannabeConsumingFacet = WannabeConsumingFacet()
 
-        target.asMutableEntity().addFacet(consumingFacet)
-        target.asMutableEntity().addFacet(wannabeConsumingFacet)
+            target.asMutableEntity().addFacet(consumingFacet)
+            target.asMutableEntity().addFacet(wannabeConsumingFacet)
 
-        val command = TestMessage(target)
+            val command = TestMessage(target)
 
-        target.receiveMessage(command)
+            target.receiveMessage(command)
 
-        assertTrue("Facet received the command") {
-            wannabeConsumingFacet.wasGivenCommand(command).not()
+            assertTrue("Facet received the command") {
+                wannabeConsumingFacet.wasGivenCommand(command).not()
+            }
         }
-    }
 
     @Test
     fun given_an_entity_with_two_identical_attributes_added_it_should_have_only_one_more() {
@@ -190,8 +213,8 @@ class DefaultEntityTest {
     }
 
     class TestMessage(
-            override val source: Entity<TestType, TestContext>,
-            override val context: TestContext = TestContext
+        override val source: Entity<TestType, TestContext>,
+        override val context: TestContext = TestContext
     ) : Message<TestContext>
 
     object InitialAttribute : BaseAttribute()
@@ -224,7 +247,7 @@ class DefaultEntityTest {
     }
 
     abstract class TestFacet(
-            private val response: Response
+        private val response: Response
     ) : BaseFacet<TestContext, TestMessage>(TestMessage::class) {
 
         private val givenCommands = mutableListOf<Message<TestContext>>()
@@ -242,6 +265,7 @@ class DefaultEntityTest {
     object TestContext : Context
 
     object TestType : BaseEntityType(
-            name = "test",
-            description = "this is a test entity")
+        name = "test",
+        description = "this is a test entity"
+    )
 }

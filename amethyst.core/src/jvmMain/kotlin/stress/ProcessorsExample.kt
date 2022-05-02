@@ -19,8 +19,8 @@ data class DependsOn(val processors: List<ProcessorEntity>) : Attribute {
 }
 
 data class ProcessorContext(
-        val currentTime: Long,
-        val entities: Sequence<Entity<Context, EntityType<Context>>>
+    val currentTime: Long,
+    val entities: Sequence<Entity<Context, EntityType<Context>>>
 ) : Context
 
 object Processor : EntityType<ProcessorContext> {
@@ -31,7 +31,7 @@ typealias ProcessorEntity = Entity<ProcessorContext, Processor>
 
 @Suppress("UNCHECKED_CAST")
 class Engine(
-        override val coroutineContext: CoroutineContext = Dispatchers.Default
+    override val coroutineContext: CoroutineContext = Dispatchers.Default
 ) : CoroutineScope {
 
     private val entities = mutableMapOf<KClass<out Context>, MutableList<Entity<Context, EntityType<Context>>>>()
@@ -49,8 +49,8 @@ class Engine(
             entities[ProcessorContext::class]?.map {
                 async {
                     it.update(ProcessorContext(
-                            currentTime = System.currentTimeMillis(),
-                            entities = entities.values.asSequence().flatMap { it.asSequence() }
+                        currentTime = System.currentTimeMillis(),
+                        entities = entities.values.asSequence().flatMap { it.asSequence() }
                     ))
                 }
             }?.awaitAll()
@@ -69,10 +69,10 @@ interface Behavior<C : Context, T : EntityType<C>> {
 }
 
 class Entity<C : Context, T : EntityType<C>>(
-        val type: T,
-        val contextClass: KClass<C>,
-        val attributes: Set<Attribute>,
-        val behaviors: Set<Behavior<C, T>>
+    val type: T,
+    val contextClass: KClass<C>,
+    val attributes: Set<Attribute>,
+    val behaviors: Set<Behavior<C, T>>
 ) {
 
     val id: UUID = UUID.randomUUID()
@@ -83,17 +83,17 @@ class Entity<C : Context, T : EntityType<C>>(
 }
 
 fun processor(attributes: Set<Attribute>, fn: suspend (ProcessorContext) -> Boolean) = Entity(
-        type = Processor,
-        contextClass = ProcessorContext::class,
-        attributes = attributes,
-        behaviors = setOf(object : Behavior<ProcessorContext, Processor> {
-            override suspend fun update(
-                    entity: Entity<ProcessorContext, Processor>,
-                    context: ProcessorContext
-            ): Boolean {
-                return fn(context)
-            }
-        })
+    type = Processor,
+    contextClass = ProcessorContext::class,
+    attributes = attributes,
+    behaviors = setOf(object : Behavior<ProcessorContext, Processor> {
+        override suspend fun update(
+            entity: Entity<ProcessorContext, Processor>,
+            context: ProcessorContext
+        ): Boolean {
+            return fn(context)
+        }
+    })
 )
 
 data class LastUpdate(var lastUpdate: Long = System.currentTimeMillis()) : Attribute {
@@ -109,7 +109,7 @@ fun main() {
     val engine = Engine()
 
     val floraProcessor = processor(
-            attributes = setOf(LastUpdate(), Category("flora"))
+        attributes = setOf(LastUpdate(), Category("flora"))
     ) { (currentTime, entities) ->
         // we get the last update from this entity and calculate whether we want to update now
         entities.filter {
@@ -120,13 +120,13 @@ fun main() {
         true
     }
     val faunaProcessor = processor(
-            attributes = setOf(LastUpdate(), Category("fauna"), DependsOn(listOf(floraProcessor)))
+        attributes = setOf(LastUpdate(), Category("fauna"), DependsOn(listOf(floraProcessor)))
     ) { (currentTime, entities) ->
         // same as above, but different filtering
         true
     }
     val combatProcessor = processor(
-            attributes = setOf(LastUpdate(), Category("combat"), DependsOn(listOf(floraProcessor, faunaProcessor)))
+        attributes = setOf(LastUpdate(), Category("combat"), DependsOn(listOf(floraProcessor, faunaProcessor)))
     ) { (currentTime, entities) ->
         // same as above, but different filtering
         true

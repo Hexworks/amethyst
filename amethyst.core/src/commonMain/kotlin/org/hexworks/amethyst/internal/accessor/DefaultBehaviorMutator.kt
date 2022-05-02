@@ -4,7 +4,6 @@ import kotlinx.collections.immutable.toPersistentSet
 import org.hexworks.amethyst.api.Context
 import org.hexworks.amethyst.api.mutator.BehaviorMutator
 import org.hexworks.amethyst.api.system.Behavior
-import org.hexworks.cobalt.datatypes.Maybe
 import kotlin.reflect.KClass
 
 class DefaultBehaviorMutator<C : Context>(behaviors: Set<Behavior<C>>) : BehaviorMutator<C> {
@@ -16,10 +15,6 @@ class DefaultBehaviorMutator<C : Context>(behaviors: Set<Behavior<C>>) : Behavio
         get() = currentBehaviors.isNotEmpty()
 
     private var currentBehaviors = behaviors.toPersistentSet()
-
-    override fun <T : Behavior<C>> findBehavior(klass: KClass<T>): Maybe<T> {
-        return Maybe.ofNullable(findBehaviorOrNull(klass))
-    }
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : Behavior<C>> findBehaviorOrNull(klass: KClass<T>): T? {

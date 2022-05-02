@@ -1,7 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-import java.lang.StringBuilder
-
 plugins {
     id("org.jetbrains.dokka") version "1.4.10.2"
 }
@@ -10,8 +8,7 @@ allprojects {
     repositories {
         mavenLocal()
         mavenCentral()
-        jcenter()
-        kotlinx()
+        maven("https://dl.bintray.com/kotlin/kotlinx")
     }
 }
 

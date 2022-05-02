@@ -15,14 +15,14 @@ import org.hexworks.cobalt.core.api.UUID
  * Base class that can be used to create custom [MutableEntity] implementations.
  */
 abstract class BaseEntity<T : EntityType, C : Context>(
-        override val type: T,
-        attributes: Set<Attribute> = setOf(),
-        facets: Set<FacetWithContext<C>> = setOf(),
-        behaviors: Set<Behavior<C>> = setOf()
+    override val type: T,
+    attributes: Set<Attribute> = setOf(),
+    facets: Set<FacetWithContext<C>> = setOf(),
+    behaviors: Set<Behavior<C>> = setOf()
 ) : MutableEntity<T, C>,
-        AttributeMutator by AttributeMutator.create(attributes),
-        FacetMutator<C> by FacetMutator.create(facets),
-        BehaviorMutator<C> by BehaviorMutator.create(behaviors) {
+    AttributeMutator by AttributeMutator.create(attributes),
+    FacetMutator<C> by FacetMutator.create(facets),
+    BehaviorMutator<C> by BehaviorMutator.create(behaviors) {
 
     override val id = UUID.randomUUID()
 

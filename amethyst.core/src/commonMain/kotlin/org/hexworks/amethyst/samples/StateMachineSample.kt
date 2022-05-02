@@ -1,6 +1,11 @@
 package org.hexworks.amethyst.samples
 
-import org.hexworks.amethyst.api.*
+import org.hexworks.amethyst.api.Consumed
+import org.hexworks.amethyst.api.Context
+import org.hexworks.amethyst.api.Message
+import org.hexworks.amethyst.api.Pass
+import org.hexworks.amethyst.api.Response
+import org.hexworks.amethyst.api.StateResponse
 import org.hexworks.amethyst.api.base.BaseAttribute
 import org.hexworks.amethyst.api.base.BaseFacet
 import org.hexworks.amethyst.api.base.BaseStateFacet
@@ -18,44 +23,46 @@ class StateMachineSample {
 
     sealed class BarrierAction : Message<MyContext> {
         data class Unlock(
-                override val context: MyContext,
-                override val source: Entity<EntityType, MyContext>
+            override val context: MyContext,
+            override val source: Entity<EntityType, MyContext>
         ) : BarrierAction()
 
         data class Open(
-                override val context: MyContext,
-                override val source: Entity<EntityType, MyContext>
+            override val context: MyContext,
+            override val source: Entity<EntityType, MyContext>
         ) : BarrierAction()
 
         data class Close(
-                override val context: MyContext,
-                override val source: Entity<EntityType, MyContext>
+            override val context: MyContext,
+            override val source: Entity<EntityType, MyContext>
         ) : BarrierAction()
     }
 
     sealed class BarrierStateChange : Message<MyContext> {
         data class Unlocked(
-                override val context: MyContext,
-                override val source: Entity<EntityType, MyContext>
+            override val context: MyContext,
+            override val source: Entity<EntityType, MyContext>
         ) : BarrierStateChange()
 
         data class Opened(
-                override val context: MyContext,
-                override val source: Entity<EntityType, MyContext>
+            override val context: MyContext,
+            override val source: Entity<EntityType, MyContext>
         ) : BarrierStateChange()
 
         data class Closed(
-                override val context: MyContext,
-                override val source: Entity<EntityType, MyContext>
+            override val context: MyContext,
+            override val source: Entity<EntityType, MyContext>
         ) : BarrierStateChange()
     }
 
     object Unlockable : BaseStateFacet<MyContext, BarrierAction.Unlock>(BarrierAction.Unlock::class) {
         override suspend fun onEnter(message: BarrierAction.Unlock) {
-            message.source.receiveMessage(BarrierStateChange.Unlocked(
+            message.source.receiveMessage(
+                BarrierStateChange.Unlocked(
                     context = message.context,
                     source = message.source
-            ))
+                )
+            )
         }
 
         override suspend fun receive(message: BarrierAction.Unlock): Response {
@@ -66,10 +73,12 @@ class StateMachineSample {
     object Openable : BaseStateFacet<MyContext, BarrierAction.Open>(BarrierAction.Open::class) {
 
         override suspend fun onEnter(message: BarrierAction.Open) {
-            message.source.receiveMessage(BarrierStateChange.Opened(
+            message.source.receiveMessage(
+                BarrierStateChange.Opened(
                     context = message.context,
                     source = message.source
-            ))
+                )
+            )
         }
 
         override suspend fun receive(message: BarrierAction.Open): Response {
@@ -80,10 +89,12 @@ class StateMachineSample {
     object Closeable : BaseStateFacet<MyContext, BarrierAction.Close>(BarrierAction.Close::class) {
 
         override suspend fun onEnter(message: BarrierAction.Close) {
-            message.source.receiveMessage(BarrierStateChange.Closed(
+            message.source.receiveMessage(
+                BarrierStateChange.Closed(
                     context = message.context,
                     source = message.source
-            ))
+                )
+            )
         }
 
         override suspend fun receive(message: BarrierAction.Close): Response {
@@ -98,15 +109,15 @@ class StateMachineSample {
     }
 
     data class HiddenInventory(
-            val items: Set<String>
+        val items: Set<String>
     ) : BaseAttribute()
 
     data class Inventory(
-            val items: Set<String>
+        val items: Set<String>
     ) : BaseAttribute()
 
     object InventoryHandler : BaseFacet<MyContext, StateChanged<MyContext>>(
-            messageType = StateChanged::class as KClass<StateChanged<MyContext>>
+        messageType = StateChanged::class as KClass<StateChanged<MyContext>>
     ) {
         override suspend fun receive(message: StateChanged<MyContext>): Response {
             val entity = message.source.asMutableEntity()
@@ -129,11 +140,11 @@ class StateMachineSample {
 
     fun runExample() {
         val entity = EntityBuilder.newBuilder<MyType, MyContext>(MyType)
-                .attributes(HiddenInventory(setOf("gold", "silver")))
-                .facets(
-                        InventoryHandler,
-                        Unlockable.toStateMachine(BarrierAction::class)
-                )
-                .build()
+            .attributes(HiddenInventory(setOf("gold", "silver")))
+            .facets(
+                InventoryHandler,
+                Unlockable.toStateMachine(BarrierAction::class)
+            )
+            .build()
     }
 }

@@ -25,7 +25,7 @@ interface FacetMutator<C : Context> : FacetAccessor<C> {
 
         @JvmStatic
         fun <C : Context> create(
-                facets: Set<FacetWithContext<C>>
+            facets: Set<FacetWithContext<C>>
         ): FacetMutator<C> = DefaultFacetMutator(facets)
     }
 }

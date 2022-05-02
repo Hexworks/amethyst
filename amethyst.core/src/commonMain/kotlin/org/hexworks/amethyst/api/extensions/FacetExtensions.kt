@@ -11,8 +11,8 @@ import kotlin.reflect.KClass
  * the acceptable message type.
  */
 fun <C : Context, A : Message<C>, M : A> Facet<C, M>.toStateMachine(
-        commonAncestor: KClass<A>
+    commonAncestor: KClass<A>
 ): Facet<C, A> = StateMachineFacet(
-        messageType = commonAncestor,
-        initialState = this
+    messageType = commonAncestor,
+    initialState = this
 )

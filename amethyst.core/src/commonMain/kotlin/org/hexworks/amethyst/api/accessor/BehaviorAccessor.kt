@@ -5,7 +5,6 @@ import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.mutator.BehaviorMutator
 import org.hexworks.amethyst.api.system.Behavior
 import org.hexworks.amethyst.internal.accessor.DefaultBehaviorMutator
-import org.hexworks.cobalt.datatypes.Maybe
 import kotlin.jvm.JvmStatic
 import kotlin.reflect.KClass
 
@@ -22,9 +21,11 @@ interface BehaviorAccessor<C : Context> {
     val hasBehaviors: Boolean
 
     /**
-     * Returns the [Behavior] of the given class [T] (if any).
+     * Returns the [Behavior] of the given class [T] or throws an exception if the
+     * behavior cannot be found.
      */
-    fun <T : Behavior<C>> findBehavior(klass: KClass<T>) = Maybe.ofNullable(findBehaviorOrNull(klass))
+    fun <T : Behavior<C>> findBehavior(klass: KClass<T>) =
+        findBehaviorOrNull(klass) ?: error("Cannot find behavior using class: $klass")
 
     /**
      * Returns the [Behavior] of the given class [T] (if any).

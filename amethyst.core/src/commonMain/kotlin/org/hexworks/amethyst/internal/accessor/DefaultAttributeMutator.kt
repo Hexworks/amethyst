@@ -1,11 +1,8 @@
 package org.hexworks.amethyst.internal.accessor
 
 import kotlinx.collections.immutable.toPersistentHashMap
-import kotlinx.collections.immutable.toPersistentList
-import kotlinx.collections.immutable.toPersistentSet
 import org.hexworks.amethyst.api.Attribute
 import org.hexworks.amethyst.api.mutator.AttributeMutator
-import org.hexworks.cobalt.datatypes.Maybe
 import kotlin.reflect.KClass
 
 @Suppress("UNCHECKED_CAST")
@@ -20,11 +17,6 @@ class DefaultAttributeMutator(attributes: Set<Attribute>) : AttributeMutator {
     private var currentAttributes = attributes.map {
         it.id to it
     }.toMap().toPersistentHashMap()
-
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : Attribute> findAttribute(klass: KClass<T>): Maybe<T> {
-        return Maybe.ofNullable(findAttributeOrNull(klass))
-    }
 
     override fun <T : Attribute> findAttributeOrNull(klass: KClass<T>): T? {
         return currentAttributes.values.firstOrNull { klass.isInstance(it) } as? T
